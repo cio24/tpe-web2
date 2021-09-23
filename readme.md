@@ -1,0 +1,1 @@
+# TODO: configurar nginx, mysql, volumenes y variables de entorno
