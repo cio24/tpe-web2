@@ -1,32 +1,42 @@
 version: "3.7"
 
 services:
-  servidor-nginx:
-    image: nginx:alpine
+  nginx-server:
+    image: nginx:stable-alpine
+    container_name: nginx-tpeweb2-c
     ports:
-      - "80:80"
+      - 80:80
+    volumes:
+      # mapping php code and files that nginx will serve
+      - ./app:/var/www/app
+      # mapping nginx configurations
+      - ./site.conf:/etc/nginx/conf.d/site.conf
     depends_on:
       - php
-      - db-mysql
+      # - mysql-db
 
   php:
-    image: php:7.4-alpine
-
-  composer:
-    image: composer
-    command: install
-
-  db-mysql:
-    image: mysql
-    ports:
-      - "3306:3306"
-      - "3307:3306"
+    build:
+      context: ./
+      dockerfile: ./customPhp.Dockerfile
+    image: php:7.4-fpm-custom
+    container_name: php-tpeweb2-c
     volumes:
-      - "./db-mysql-data:/var/lib/mysql"
+      # mapping the folder where the code php will be accessed by the php interpreter
+      - ./app/src:/var/www/app/src
+      - ~/.bashrc:/root/.bashrc
 
-  php-my-admin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8080:80"
-    depends_on:
-      - mysqldb
+  # mysql-db:
+  #   image: mysql
+  #   ports:
+  #     - "3306:3306"
+  #     - "3307:3306"
+  #   volumes:
+  #     - "./db-mysql-data:/var/lib/mysql"
+
+  # php-my-admin:
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - mysqldb
