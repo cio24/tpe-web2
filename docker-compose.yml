@@ -5,7 +5,7 @@ services:
     image: nginx:stable-alpine
     container_name: nginx-tpeweb2-c
     ports:
-      - 80:80
+      - ${NGINX_PORT}:80
     volumes:
       # mapping php code and files that nginx will serve
       - ./app:/var/www/app
@@ -26,17 +26,29 @@ services:
       - ./app/src:/var/www/app/src
       - ~/.bashrc:/root/.bashrc
 
-  # mysql-db:
-  #   image: mysql
-  #   ports:
-  #     - "3306:3306"
-  #     - "3307:3306"
-  #   volumes:
-  #     - "./db-mysql-data:/var/lib/mysql"
+  mysql-db:
+    image: mysql:8.0.26
+    container_name: mysql-tpeweb2-c
+    ports:
+      - "${MYSQL_PORT}:3306"
+    environment:
+      # this is the pasword for the "root" user
+      MYSQL_ROOT_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      
+      
+    volumes:
+      - mysql-tpeweb2-data:/var/lib/mysql
+  
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: phpmyadmin-tpeweb2-c
+    ports:
+      - "${PHPMYADMIN_PORT}:80"
+    depends_on:
+      - mysql-db
+    environment:
+      PMA_HOST: mysql-db
 
-  # php-my-admin:
-  #   image: phpmyadmin/phpmyadmin
-  #   ports:
-  #     - "8080:80"
-  #   depends_on:
-  #     - mysqldb
+volumes:
+  mysql-tpeweb2-data:
