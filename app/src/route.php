@@ -1,5 +1,4 @@
 <?php
-echo 'aca en el route';
 require_once 'controller/Controller.php';
 
 define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
@@ -16,7 +15,7 @@ $controller = new Controller();
 
 switch ($params[0]) {
     case 'home':
-        var_dump($controller);
+        // var_dump($controller);
         $controller->Home();
         break;
 

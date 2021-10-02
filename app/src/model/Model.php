@@ -5,7 +5,9 @@ class Model
 
     function __construct()
     {
-        $this->db = new PDO('mysql:host=tpeweb2careerspath.loc:port=3306;dbname=db-tpe-web2;charset=utf8', 'root', '');
+
+        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=careersPath-data', 'root', '');
+
     }
     function getData()
     {
