@@ -1,5 +1,5 @@
 <?php
-class Model
+class SubjectModel
 {
     private $db;
 
@@ -9,9 +9,9 @@ class Model
         $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
 
     }
-    function getData()
+    function getAllSubjects()
     {
-        $query=$this->db->prepare('SELECT `career`.*, `subject`.* FROM `career` LEFT JOIN `subject` ON `subject`.`career` = `career`.`id`');
+        $query=$this->db->prepare('SELECT a.id, a.name, a.year, a.semester, a.direct_requirement, b.name AS career FROM subject a LEFT JOIN career b ON a.career = b.id;');
         $query->execute();
         $data = $query->fetchAll(PDO::FETCH_OBJ);
         return $data;
