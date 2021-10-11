@@ -13,8 +13,6 @@ class Controller
     }
     function Home()
     {
-        // var_dump($this->view);
-        // var_dump($this->model);
         $data = $this->model->getData();
         $this->view->showHome($data);
     }

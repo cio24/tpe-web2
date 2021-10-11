@@ -2,13 +2,13 @@
     <h1>Materias de la Facultad de Ciencias Exactas</h1>
     <table>
         <thead>
-            <th>
-                <td>Materia</td>
-                <td>Año</td>
-                <td>Cuatrimestre</td>
-                <td>Correlativa</td>
-                <td>Carrera</td>
-            </th>
+            <tr>
+                <th>Materia</th>
+                <th>Año</th>
+                <th>Cuatrimestre</th>
+                <th>Correlativa</th>
+                <th>Carrera</th>
+            </tr>
         </thead>
         <tbody>
             {foreach from=$data item=$subject}

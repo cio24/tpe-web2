@@ -6,7 +6,7 @@ class SubjectModel
     function __construct()
     {
 
-        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
+        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=tpeweb2-data', 'root', '');
 
     }
     function getAllSubjects()

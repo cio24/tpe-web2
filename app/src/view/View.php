@@ -13,7 +13,6 @@ class View
     }
     function showHome($data)
     {
-        // var_dump($data);
         $this->smarty->display('templates/home.tpl');
     }
 }

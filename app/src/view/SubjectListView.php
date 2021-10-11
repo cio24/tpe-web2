@@ -13,7 +13,8 @@ class SubjectListView
     }
     function showList($data)
     {
-        $this->smarty->assing('data',$data);
+        $data2 = json_decode(json_encode($data), true);
+        $this->smarty->assign('data',$data2);
         $this->smarty->display('templates/SubjectList.tpl');
     }
 }
