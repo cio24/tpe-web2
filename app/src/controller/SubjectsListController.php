@@ -11,6 +11,7 @@ class SubjectsListController
         $this->model = new SubjectModel();
         $this->view = new SubjectListView();
     }
+
     function listSubjects()
     {
         $data = $this->model->getAllSubjects();
