@@ -22,4 +22,11 @@ class SubjectModel
         $subjectsData = $query->fetchAll(PDO::FETCH_OBJ);
         return $subjectsData;
     }
+
+    function get($subjectId){
+        $query = $this->db->prepare('SELECT s.*, c.name as "careerName"  FROM subject s JOIN career c on s.career = c.id WHERE s.id = ?;');
+        $query->execute(array($subjectId));
+        $subjectData = $query->fetchAll(PDO::FETCH_OBJ);
+        return $subjectData;
+    }
 }

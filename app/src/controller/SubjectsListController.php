@@ -17,4 +17,10 @@ class SubjectsListController
         $data = $this->model->getAllSubjects();
         $this->view->showList($data);
     }
+
+    function show($subjectId)
+    {
+        $subjectData = $this->model->get($subjectId);
+        $this->view->showSubject($subjectData);
+    }
 }

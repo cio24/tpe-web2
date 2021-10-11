@@ -24,6 +24,11 @@ switch ($params[1]) {
         $controller->Home();
         break;
     case 'subjects':
+        if ($params[2] != null && $params[2] != '') {
+            $subjectId = $params[2];
+            $subjectsController->show($subjectId);
+            break;
+        }
         $subjectsController->listSubjects();
         break;
     case 'careers':
