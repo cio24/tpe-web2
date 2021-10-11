@@ -1,1 +1,4 @@
 .env
+templates_c
+vendor
+.vscode

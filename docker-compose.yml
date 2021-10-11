@@ -23,7 +23,7 @@ services:
     container_name: php-tpeweb2-c
     volumes:
       # mapping the folder where the code php will be accessed by the php interpreter
-      - ./app/src:/var/www/app/src
+      - ./app:/var/www/app
       - ~/.bashrc:/root/.bashrc
 
   mysql-db:
