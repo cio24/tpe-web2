@@ -13,7 +13,7 @@
         <tbody>
             {foreach from=$data item=$subject}
                 <tr>
-                    <td>{$subject.name}</td>
+                    <td><a href="/subjects/{$subject.id}">{$subject.name}</a></td>
                     <td>{$subject.year}</td>
                     <td>{$subject.semester}</td>
                     <td>{$subject.direct_requirement}</td>
