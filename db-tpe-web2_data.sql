@@ -18,3 +18,9 @@ INSERT INTO `subject` (`id`, `semester`, `year`, `name`, `direct_requirement`, `
 (7, 2, 1, 'Programación 2', 1, 1),
 (8, 2, 1, 'Inglés 2', 4, 1),
 (9, 2, 1, 'Seminario Tecnológico 1', NULL, 1);
+
+
+ INSERT INTO `user`(email, password) VALUES
+ ('cio@gmail.com', 'cio'),
+('ema@gmail.com', 'ema');
+
