@@ -2,4 +2,4 @@
 docker-compose up -d
 
 #open the shell console inside the nginx container
-docker exec -it php-tpeweb2-c bash
+# docker exec -it php-tpeweb2-c bash
