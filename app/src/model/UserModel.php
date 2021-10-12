@@ -20,7 +20,7 @@ class UserModel
     {
         $query = $this->db->prepare('SELECT * FROM user WHERE email = ?;');
         $query->execute(array($email));
-        $userData = $query->fetchAll(PDO::FETCH_OBJ);
+        $userData = $query->fetch(PDO::FETCH_OBJ);
         return $userData;
     }
 }

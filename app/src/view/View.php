@@ -15,4 +15,7 @@ class View
     {
         $this->smarty->display('templates/home.tpl');
     }
+    function showLogin(){
+        $this->smarty->display('templates/login.tpl');
+    }
 }

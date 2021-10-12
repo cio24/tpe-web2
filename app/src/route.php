@@ -1,20 +1,25 @@
 <?php
 require_once 'controller/Controller.php';
+require_once 'controller/AuthController.php';
+
+require_once 'controller/AuthController.php';
+
 require_once 'controller/CareerListController.php';
 require_once 'controller/SubjectsListController.php';
 
 
 define("BASE_URL", 'http://'.$_SERVER["SERVER_NAME"].':'.$_SERVER["SERVER_PORT"].dirname($_SERVER["PHP_SELF"]).'/');
+define("LOGIN", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]) . '/login');
 
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 } else {
     $action = '/home';
 }
-
 $params = explode('/', $action);
 
 $controller = new Controller();
+$authController = new AuthController();
 $subjectsController = new SubjectsListController();
 $careersController = new CareersListController();
 
@@ -22,6 +27,12 @@ $careersController = new CareersListController();
 switch ($params[1]) {
     case 'home':
         $controller->Home();
+        break;
+    case 'login':
+        $controller->login();
+        break;
+    case 'validateUser':
+        $authController->validateUser();
         break;
     case 'subjects':
         if ($params[2] != null && $params[2] != '') {
