@@ -16,14 +16,14 @@ class AuthController
         $this->userModel = new UserModel();
     }
 
-    function validateUser()
+    function verifyUser()
     {
         $email = $_POST['userEmail'];
         $password = $_POST['userPassword'];
         $user = $this->userModel->get($email);
 
-        if ($user && password_verify($password, $user->password) && ($email == $user->email)) {
-            // authHelper::login($user);
+        if (!empty($user) && $user->password == $password) {
+            authHelper::startSession($user);
             header("Location: " . BASE_URL . "home");
         } else{
             $this->view->showLogin("This user is not registered or the information is wrong");
