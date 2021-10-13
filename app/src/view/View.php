@@ -11,7 +11,7 @@ class View
     {
         $this->smarty = new Smarty();
     }
-    function showHome($data)
+    function showHome()
     {
         $this->smarty->display('templates/home.tpl');
     }

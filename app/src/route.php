@@ -32,7 +32,7 @@ switch ($params[1]) {
         $controller->login();
         break;
     case 'validateUser':
-        $authController->validateUser();
+        $authController->verifyUser();
         break;
     case 'subjects':
         if ($params[2] != null && $params[2] != '') {

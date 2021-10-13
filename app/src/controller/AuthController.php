@@ -2,7 +2,7 @@
 
 include_once './view/AuthView.php';
 include_once './model/UserModel.php';
-// include_once './Helpers/AuthHelper.php';
+include_once './helpers/AuthHelper.php';
 
 class AuthController
 {
@@ -23,8 +23,8 @@ class AuthController
         $user = $this->userModel->get($email);
 
         if (!empty($user) && $user->password == $password) {
-            authHelper::startSession($user);
-            header("Location: " . BASE_URL . "home");
+            AuthHelper::saveSession($user);
+            // header("Location: " . BASE_URL . "home");
         } else{
             $this->view->showLogin("This user is not registered or the information is wrong");
         }
