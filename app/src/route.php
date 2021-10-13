@@ -8,8 +8,8 @@ require_once 'controller/CareerListController.php';
 require_once 'controller/SubjectsListController.php';
 
 
-define("BASE_URL", 'http://'.$_SERVER["SERVER_NAME"].':'.$_SERVER["SERVER_PORT"].dirname($_SERVER["PHP_SELF"]).'/');
-define("LOGIN", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]) . '/login');
+define("BASE_URL", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]));
+define("LOGIN", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]) . 'login');
 
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
@@ -32,7 +32,7 @@ switch ($params[1]) {
         $controller->login();
         break;
     case 'validateUser':
-        $authController->validateUser();
+        $authController->verifyUser();
         break;
     case 'subjects':
         if ($params[2] != null && $params[2] != '') {
@@ -43,7 +43,7 @@ switch ($params[1]) {
         $subjectsController->listSubjects();
         break;
     case 'careers':
-        if($params[2] != null && $params[2] != ''){
+        if ($params[2] != null && $params[2] != '') {
             $careerId = $params[2];
             $careersController->show($careerId);
             break;
