@@ -13,6 +13,10 @@ class View
     }
     function showHome()
     {
+        var_dump(AuthHelper::checkLoggedIn());
+        $action = AuthHelper::checkLoggedIn() ? 'logout' : 'login';
+
+        $this->smarty->assign('action', $action);
         $this->smarty->display('templates/home.tpl');
     }
     function showLogin(){

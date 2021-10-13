@@ -31,6 +31,9 @@ switch ($params[1]) {
     case 'login':
         $controller->login();
         break;
+    case 'logout':
+        $controller->logout();
+        break;
     case 'validateUser':
         $authController->verifyUser();
         break;

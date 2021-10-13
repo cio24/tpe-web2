@@ -19,7 +19,15 @@ class Controller
         $data = $this->model->getData();
         $this->view->showHome($data);
     }
-    function login(){
+    function login()
+    {
         $this->authView->showLogin('');
+    }
+
+    function logout()
+    {
+        AuthHelper::logout();
+        header("Location:" . BASE_URL . "home");
+
     }
 }

@@ -22,10 +22,12 @@ class AuthController
         $password = $_POST['userPassword'];
         $user = $this->userModel->get($email);
 
-        if (!empty($user) && $user->password == $password) {
+        if (!empty($user) && password_verify($password, $user->password)) {
             AuthHelper::saveSession($user);
-            // header("Location: " . BASE_URL . "home");
-        } else{
+            header("Location: " . BASE_URL . "home");
+        } else {
+            print_r("encrypt: {$user->password}, password {$password}");
+
             $this->view->showLogin("This user is not registered or the information is wrong");
         }
     }

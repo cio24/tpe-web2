@@ -14,7 +14,7 @@ class CareerListView
     }
     function showList($data)
     {
-        $isLoggedIn = AuthHelper::$isLoggedIn;
+        $isLoggedIn = AuthHelper::checkLoggedIn();
         $this->smarty->assign('isLoggedIn', $isLoggedIn);
 
         $data2 = json_decode(json_encode($data), true);
