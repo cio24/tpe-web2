@@ -35,7 +35,23 @@ switch ($params[1]) {
         $authController->verifyUser();
         break;
     case 'subjects':
+        if ($params[2]!=null && $params[2]=='add') {
+            $subjectsController->add($_POST);
+            break;
+        }
         if ($params[2] != null && $params[2] != '') {
+            if ($params[3]!=null&&$params[3]=='delete') {
+                $subjectsController->delete($params[2]);
+                break;    
+            }
+            if ($params[4]!=null&&$params[4]=='send') {
+                $subjectsController->sendEdit($params[2],$_POST);
+                break;
+            }
+            if ($params[3]!=null && $params[3]=='edit') {
+                $subjectsController->edit($params[2]);   
+                break;
+            }
             $subjectId = $params[2];
             $subjectsController->show($subjectId);
             break;
