@@ -5,7 +5,7 @@ class UserModel
 
     function __construct()
     {
-        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=careersPath-data', 'root', '');
+        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
     }
 
     function getAllCareers()
@@ -20,7 +20,7 @@ class UserModel
     {
         $query = $this->db->prepare('SELECT * FROM user WHERE email = ?;');
         $query->execute(array($email));
-        $userData = $query->fetchAll(PDO::FETCH_OBJ);
+        $userData = $query->fetch(PDO::FETCH_OBJ);
         return $userData;
     }
 }
