@@ -22,12 +22,11 @@ class CareerView
         $this->smarty->display('templates/CareerList.tpl');
     }
 
-    function showCareer($careerData, $subjectsDataOfCareer)
+    function showOne($careerData, $subjectsDataOfCareer)
     {
-        $careerData = json_decode(json_encode($careerData), true);
-        $subjectsDataOfCareer = json_decode(json_encode($subjectsDataOfCareer), true);
-        $this->smarty->assign('careerData', $careerData[0]);
+        $this->smarty->assign('careerData', $careerData);
         $this->smarty->assign('subjectsDataOfCareer', $subjectsDataOfCareer);
+
         $this->smarty->display('templates/CareerData.tpl');
     }
 }

@@ -20,7 +20,7 @@ class CareerModel
     {
         $query = $this->db->prepare('SELECT * FROM career WHERE id = ?;');
         $query->execute(array($careerId));
-        $careerData = $query->fetchAll(PDO::FETCH_OBJ);
+        $careerData = $query->fetch(PDO::FETCH_OBJ);
         return $careerData;
     }
 }

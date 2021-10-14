@@ -1,7 +1,7 @@
 <?php
 require_once './model/CareerModel.php';
-require_once './model/SubjectModel.php';
 require_once './view/CareerView.php';
+require_once './model/SubjectModel.php';
 
 class CareerController
 {
@@ -12,8 +12,8 @@ class CareerController
     function __construct()
     {
         $this->model = new CareerModel();
-        $this->subjectModel = new SubjectModel();
         $this->view = new CareerView();
+        $this->subjectModel = new SubjectModel();
     }
     
     function index()
@@ -26,6 +26,6 @@ class CareerController
     {
         $careerData = $this->model->get($careerId);
         $subjectsDataOfCareer = $this->subjectModel->getFilteredByCareer($careerId);
-        $this->view->showCareer($careerData,$subjectsDataOfCareer);
+        $this->view->showOne($careerData,$subjectsDataOfCareer);
     }
 }
