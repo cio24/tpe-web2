@@ -12,13 +12,10 @@ class CareerView
     {
         $this->smarty = new Smarty();
     }
-    function showAll($data)
+    function showAll($careers,$isLoggedIn)
     {
-        $isLoggedIn = AuthHelper::checkLoggedIn();
         $this->smarty->assign('isLoggedIn', $isLoggedIn);
-
-        $data2 = json_decode(json_encode($data), true);
-        $this->smarty->assign('data', $data2);
+        $this->smarty->assign('data', $careers);
         $this->smarty->display('templates/CareerList.tpl');
     }
 
@@ -26,7 +23,11 @@ class CareerView
     {
         $this->smarty->assign('careerData', $careerData);
         $this->smarty->assign('subjectsDataOfCareer', $subjectsDataOfCareer);
-
         $this->smarty->display('templates/CareerData.tpl');
+    }
+    function showEdit($career)
+    {
+        $this->smarty->assign('career',$career);
+        $this->smarty->display('templates/careerEdit.tpl');
     }
 }

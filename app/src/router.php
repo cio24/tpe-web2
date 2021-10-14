@@ -7,7 +7,7 @@ require_once 'controller/HomeController.php';
 //controllers
 $sessionController = new SessionController();
 $subjectController = new SubjectController();
-$careersController = new CareerController();
+$careerController = new CareerController();
 $homeController = new HomeController();
 
 //routes constants
@@ -68,12 +68,28 @@ switch ($params[1]) {
         break;
 
     case 'careers':
-        if ($params[2] != null && $params[2] != '') {
-            $careerId = $params[2];
-            $careersController->show($careerId);
+        if ($params[2] != null && $params[2] == 'add') {
+            $careerController->add($_POST);
             break;
         }
-        $careersController->index();
+        if ($params[2] != null && $params[2] != '') {
+            if ($params[3] != null && $params[3] == 'delete') {
+                $careerController->delete($params[2]);
+                break;
+            }
+            if ($params[4] != null && $params[4] == 'update') {
+                $careerController->update($params[2], $_POST);
+                break;
+            }
+            if ($params[3] != null && $params[3] == 'edit') {
+                $careerController->edit($params[2]);
+                break;
+            }
+            $careerId = $params[2];
+            $careerController->show($careerId);
+            break;
+        }
+        $careerController->index();
         break;
 
     default:
