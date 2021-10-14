@@ -3,7 +3,7 @@
 require_once './../vendor/autoload.php';
 include_once './helpers/AuthHelper.php';
 
-class CareerListView
+class CareerView
 {
     private $smarty;
 
@@ -12,9 +12,9 @@ class CareerListView
     {
         $this->smarty = new Smarty();
     }
-    function showList($data)
+    function showAll($data)
     {
-        $isLoggedIn = AuthHelper::$isLoggedIn;
+        $isLoggedIn = AuthHelper::checkLoggedIn();
         $this->smarty->assign('isLoggedIn', $isLoggedIn);
 
         $data2 = json_decode(json_encode($data), true);
@@ -22,12 +22,11 @@ class CareerListView
         $this->smarty->display('templates/CareerList.tpl');
     }
 
-    function showCareer($careerData, $subjectsDataOfCareer)
+    function showOne($careerData, $subjectsDataOfCareer)
     {
-        $careerData = json_decode(json_encode($careerData), true);
-        $subjectsDataOfCareer = json_decode(json_encode($subjectsDataOfCareer), true);
-        $this->smarty->assign('careerData', $careerData[0]);
+        $this->smarty->assign('careerData', $careerData);
         $this->smarty->assign('subjectsDataOfCareer', $subjectsDataOfCareer);
+
         $this->smarty->display('templates/CareerData.tpl');
     }
 }

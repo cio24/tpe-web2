@@ -2,7 +2,7 @@
     <h1>Carreras de la Facultad de Ciencias Exactas</h1>
 
 
-{if $isLogged}
+{if $isLoggedIn}
 <a class="btn btn-primary" href="careers/create" role="button">Add new</a>
 {/if}
 

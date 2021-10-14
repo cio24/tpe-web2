@@ -12,9 +12,9 @@
   </thead>
   <tbody>
         <tr>
-            <td>{$careerData.name}</td>
-            <td>{$careerData.faculty}</td>
-            <td>{$careerData.years}</td>
+            <td>{$careerData->name}</td>
+            <td>{$careerData->faculty}</td>
+            <td>{$careerData->years}</td>
         </tr>
   </tbody>
 </table>
@@ -32,12 +32,12 @@
     </tr>
   </thead>
   <tbody>
-            {foreach from=$subjectsDataOfCareer item=$subjectData}
+            {foreach $subjectsDataOfCareer as $subjectData}
                 <tr>
-                    <td>{$subjectData.name}</td>
-                    <td>{$subjectData.year}</td>
-                    <td>{$subjectData.semester}</td>
-                    <td>{$subjectData.direct_requirement}</td>
+                    <td>{$subjectData->name}</td>
+                    <td>{$subjectData->year}</td>
+                    <td>{$subjectData->semester}</td>
+                    <td>{$subjectData->direct_requirement}</td>
                 </tr>
             {/foreach}
   </tbody>
