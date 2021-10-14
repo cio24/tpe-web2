@@ -1,41 +1,41 @@
 <?php
-require_once 'controller/Controller.php';
-require_once 'controller/AuthController.php';
+require_once 'controller/SessionController.php';
+require_once 'controller/CareerController.php';
+require_once 'controller/SubjectController.php';
+require_once 'controller/HomeController.php';
 
-require_once 'controller/AuthController.php';
 
-require_once 'controller/CareerListController.php';
-require_once 'controller/SubjectsListController.php';
+$sessionController = new SessionController();
+$subjectsController = new SubjectController();
+$careersController = new CareerController();
+$homeController = new HomeController();
 
 
 define("BASE_URL", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]));
-define("LOGIN", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]) . 'login');
+define("LOGIN", BASE_URL . "login");
+
+
 
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 } else {
     $action = '/home';
 }
+
 $params = explode('/', $action);
-
-$controller = new Controller();
-$authController = new AuthController();
-$subjectsController = new SubjectsListController();
-$careersController = new CareersListController();
-
 
 switch ($params[1]) {
     case 'home':
-        $controller->Home();
+        $homeController->index();
         break;
     case 'login':
-        $controller->login();
+        $sessionController->index();
         break;
     case 'logout':
-        $controller->logout();
+        $sessionController->logout();
         break;
-    case 'validateUser':
-        $authController->verifyUser();
+    case 'verifyUser':
+        $sessionController->verifyUser();
         break;
     case 'subjects':
         if ($params[2] != null && $params[2] != '') {
@@ -51,7 +51,7 @@ switch ($params[1]) {
             $careersController->show($careerId);
             break;
         }
-        $careersController->listCareers();
+        $careersController->index();
         break;
     default:
         echo ('404 Page not found');

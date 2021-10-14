@@ -1,10 +1,10 @@
 <?php
 
-include_once './view/AuthView.php';
+include_once './view/SessionView.php';
 include_once './model/UserModel.php';
 include_once './helpers/AuthHelper.php';
 
-class AuthController
+class SessionController
 {
 
     private $view;
@@ -12,29 +12,37 @@ class AuthController
 
     function __construct()
     {
-        $this->view = new authView();
+        $this->view = new SessionView();
         $this->userModel = new UserModel();
     }
 
-    function verifyUser()
+    function index()
     {
-        $email = $_POST['userEmail'];
-        $password = $_POST['userPassword'];
-        $user = $this->userModel->get($email);
-
-        if (!empty($user) && password_verify($password, $user->password)) {
-            AuthHelper::saveSession($user);
-            header("Location: " . BASE_URL . "home");
-        } else {
-            print_r("encrypt: {$user->password}, password {$password}");
-
-            $this->view->showLogin("This user is not registered or the information is wrong");
-        }
+        $this->view->showLogin('');
     }
 
     function logout()
     {
-        // authHelper::logout();
+        session_start();
+        session_destroy();
         header("Location:" . BASE_URL . "home");
+    }
+
+    function verifyUser()
+    {
+        //getting the form data loaded by the user 
+        $email = $_POST['userEmail'];
+        $password = $_POST['userPassword'];
+
+        //getting (if exists) the user data associated with the given email 
+        $user = $this->userModel->get($email);
+
+        //save the session if the password is correct
+        if (!empty($user) && password_verify($password, $user->password)) {
+            session_start();
+            AuthHelper::saveSession($user->email);
+            header("Location: " . BASE_URL . "home");
+        } else
+            $this->view->showLogin("This user is not registered or the information is wrong");
     }
 }

@@ -1,10 +1,11 @@
 <?php
 require_once './model/CareerModel.php';
 require_once './model/SubjectModel.php';
-require_once './view/CareerListView.php';
-class CareersListController
+require_once './view/CareerView.php';
+
+class CareerController
 {
-    private $model;
+    private $model;     
     private $view;
     private $subjectModel;
 
@@ -12,19 +13,19 @@ class CareersListController
     {
         $this->model = new CareerModel();
         $this->subjectModel = new SubjectModel();
-
-        $this->view = new CareerListView();
+        $this->view = new CareerView();
     }
-    function listCareers()
+    
+    function index()
     {
-        $data = $this->model->getAllCareers();
-        $this->view->showList($data);
+        $careersData = $this->model->getAll();
+        $this->view->showAll($careersData);
     }
 
         function show($careerId)
     {
         $careerData = $this->model->get($careerId);
-        $subjectsDataOfCareer = $this->subjectModel->getSubjects($careerId);
+        $subjectsDataOfCareer = $this->subjectModel->getFilteredByCareer($careerId);
         $this->view->showCareer($careerData,$subjectsDataOfCareer);
     }
 }

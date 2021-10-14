@@ -3,7 +3,7 @@
 require_once './../vendor/autoload.php';
 include_once './helpers/AuthHelper.php';
 
-class CareerListView
+class CareerView
 {
     private $smarty;
 
@@ -12,7 +12,7 @@ class CareerListView
     {
         $this->smarty = new Smarty();
     }
-    function showList($data)
+    function showAll($data)
     {
         $isLoggedIn = AuthHelper::checkLoggedIn();
         $this->smarty->assign('isLoggedIn', $isLoggedIn);

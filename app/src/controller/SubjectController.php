@@ -1,7 +1,8 @@
 <?php
 require_once './model/SubjectModel.php';
 require_once './view/SubjectListView.php';
-class SubjectsListController
+
+class SubjectController
 {
     private $model;
     private $view;

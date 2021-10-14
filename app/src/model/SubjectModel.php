@@ -16,7 +16,7 @@ class SubjectModel
         return $data;
     }
 
-    function getSubjects($careerId){
+    function getFilteredByCareer($careerId){
         $query = $this->db->prepare('SELECT * FROM subject WHERE career = ?;');
         $query->execute(array($careerId));
         $subjectsData = $query->fetchAll(PDO::FETCH_OBJ);
