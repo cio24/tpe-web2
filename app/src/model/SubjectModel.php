@@ -5,9 +5,9 @@ class SubjectModel
 
     function __construct()
     {
-        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=tpeweb2-data', 'root', '');
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
     }
+
     function getAll()
     {
         $query = $this->db->prepare('SELECT a.id, a.name, a.year, a.semester, a.direct_requirement, b.name AS career FROM subject a LEFT JOIN career b ON a.career = b.id;');
@@ -31,22 +31,24 @@ class SubjectModel
         $subjectData = $query->fetchAll(PDO::FETCH_OBJ);
         return $subjectData;
     }
+
     function add($subject)
     {
-        try {
-            //code...
-            $query = $this->db->prepare("INSERT INTO `subject` (`id`, `semester`, `year`, `name`, `direct_requirement`, `career`) VALUES (NULL, ?, ?, ?, ?, ?);");
-            $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career']));
-        } catch (PDOException $s) {
-            print_r($s);
-        }
-        var_dump($subject);
+
+        if($subject['direct_requirement'] == "null")
+            $subject['direct_requirement'] = null; 
+            
+        $query = $this->db->prepare("INSERT INTO `subject` (`id`, `semester`, `year`, `name`, `direct_requirement`, `career`) VALUES (NULL, ?, ?, ?, ?, ?);");
+        $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career']));
+
     }
+
     function update($subjectId,$subject)
     {
         $query = $this->db->prepare("UPDATE `subject` SET `semester` = ?,`year` = ?,`name` = ?,`direct_requirement` = ?, `career` = ? WHERE `subject`.`id` = ?;");
         $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $subjectId));
     }
+
     function delete($subjectId)
     {
         $query = $this->db->prepare("DELETE FROM `subject` WHERE `subject`.`id` = ?");
