@@ -49,15 +49,15 @@ switch ($params[1]) {
         }
         if ($params[2] != null && $params[2] != '') {
             if ($params[3] != null && $params[3] == 'delete') {
-                $subjectsController->delete($params[2]);
+                $subjectController->delete($params[2]);
                 break;
             }
-            if ($params[4] != null && $params[4] == 'send') {
-                $subjectsController->sendEdit($params[2], $_POST);
+            if ($params[4] != null && $params[4] == 'update') {
+                $subjectController->update($params[2], $_POST);
                 break;
             }
             if ($params[3] != null && $params[3] == 'edit') {
-                $subjectsController->edit($params[2]);
+                $subjectController->edit($params[2]);
                 break;
             }
             $subjectId = $params[2];

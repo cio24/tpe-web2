@@ -1,6 +1,8 @@
 <?php
 require_once './model/SubjectModel.php';
 require_once './view/SubjectView.php';
+require_once './helpers/AuthHelper.php';
+
 
 class SubjectController
 {
@@ -19,7 +21,7 @@ class SubjectController
     {
         $subjectsData = $this->model->getAll();
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData);
+        $this->view->showAll($subjectsData, $careersData,AuthHelper::checkLoggedIn());
     }
 
     function show($subjectId)
@@ -29,28 +31,30 @@ class SubjectController
     }
     function add($subject)
     {
+        header("Location:" . BASE_URL . "subjects");
         $this->model->add($subject);
         $this->index();
-        header("Location:" . BASE_URL . "subjects");
     }
     function delete($subjectId)
     {
-        $this->model->delete($subjectId);
-        $this->listSubjects();
         header("Location:" . BASE_URL . "subjects");
+        $this->model->delete($subjectId);
+        $this->index();
     }
     function edit($subjectId)
     {
-        $subjects=$this->model->getAllSubjects();
-        $careers=$this->modelCareer->getAllCareers();
+        $subjects=$this->model->getAll();
+        $careers=$this->modelCareer->getAll();
         $subject=$this->model->get($subjectId);
+        //header("Location:" . BASE_URL . "subjects/edit"); no tengo donde redirigir
         $this->view->showEdit($subject,$subjects,$careers);
     }
-    function sendEdit($subjectId,$subject)
+    function update($subjectId,$subject)
     {
+        header("Location:" . BASE_URL . "subjects");
         $this->model->update($subjectId,$subject);
-        $subjects=$this->model->getAllSubjects();
-        $careers=$this->modelCareer->getAllCareers();
-        $this->view->showList($subjects,$careers);
+        $subjects=$this->model->getAll();
+        $careers=$this->modelCareer->getAll();
+        $this->view->showAll($subjects,$careers,AuthHelper::checkLoggedIn());
     }
 }

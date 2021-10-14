@@ -1,24 +1,27 @@
 <?php
 
 include_once './view/SessionView.php';
+include_once './view/HomeView.php';
 include_once './model/UserModel.php';
 include_once './helpers/AuthHelper.php';
 
 class SessionController
 {
 
-    private $view;
+    private $loginView;
+    private $homeView;
     private $userModel;
 
     function __construct()
     {
-        $this->view = new SessionView();
+        $this->loginView = new SessionView();
+        $this->homeView = new HomeView();
         $this->userModel = new UserModel();
     }
 
     function index()
     {
-        $this->view->showLogin('');
+        $this->loginView->showLogin('');
     }
 
     function logout()
@@ -39,10 +42,11 @@ class SessionController
 
         //save the session if the password is correct
         if (!empty($user) && password_verify($password, $user->password)) {
-            session_start();
+            //session_start();
             AuthHelper::saveSession($user->email);
             header("Location: " . BASE_URL . "home");
+            $this->homeView->showHome();
         } else
-            $this->view->showLogin("This user is not registered or the information is wrong");
+            $this->loginView->showLogin("This user is not registered or the information is wrong");
     }
 }
