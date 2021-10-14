@@ -48,7 +48,6 @@ class SubjectModel
         $query = $this->db->prepare("UPDATE `subject` SET `semester` = ?,`year` = ?,`name` = ?,`direct_requirement` = ?, `career` = ? WHERE `subject`.`id` = ?;");
         $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $subjectId));
     }
-
     function delete($subjectId)
     {
         $query = $this->db->prepare("DELETE FROM `subject` WHERE `subject`.`id` = ?");
