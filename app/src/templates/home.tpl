@@ -1,5 +1,6 @@
 {include file="head-html.tpl" }
 <body>
-    <h1>Hi im a testing Home</h1>
-    <h2><a href="/subjects">Listar Materias</a></h2>
+    {include file="header.tpl"}
+    <h1 style="text-align: center">Careers Path</h1>
+    {include file="footer.tpl"}
 </body>

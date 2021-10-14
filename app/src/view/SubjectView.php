@@ -1,8 +1,8 @@
 <?php
 
 require_once './../vendor/autoload.php';
-// echo getcwd() . "\n";
-class SubjectListView
+
+class SubjectView
 {
     private $smarty;
     
@@ -11,14 +11,15 @@ class SubjectListView
     {
         $this->smarty = new Smarty();
     }
-    function showList($subjects,$careers)
+
+    function showAll($subjectData, $careersData,$logged)
     {
-        $jsonSubjects = json_decode(json_encode($subjects), true);
-        $jsonCareers = json_decode(json_encode($careers), true);
-        $this->smarty->assign('subjects',$jsonSubjects);
-        $this->smarty->assign('careers',$jsonCareers);
-        $this->smarty->display('templates/SubjectList.tpl');
+        $this->smarty->assign('subjectsData', $subjectData);
+        $this->smarty->assign('careersData', $careersData);
+        $this->smarty->assign('logged',$logged);
+        $this->smarty->display('templates/subjects.tpl');
     }
+    
     function showSubject($subjectData){
         $subjectData = json_decode(json_encode($subjectData), true);
         $this->smarty->assign('subjectData', $subjectData[0]);
