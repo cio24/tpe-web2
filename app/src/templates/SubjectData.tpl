@@ -1,7 +1,7 @@
 {include file="head-html.tpl"}
 <body>
   {include file="header.tpl"}
-  <h1 style="text-align:center">{$subjectData.name}</h1>
+  <h1 class="text-center">{$subjectData.name}</h1>
 
   <table class="table table-hover">
     <thead>

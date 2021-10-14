@@ -1,7 +1,7 @@
 {include file="head-html.tpl"}
 <body>
   {include file="header.tpl"}
-  <h1>Carreras de la Facultad de Ciencias Exactas</h1>
+  <h1 class="text-center">Carreras de la Facultad de Ciencias Exactas</h1>
 
   {if $isLoggedIn}
     <a class="btn btn-primary" href="careers/create" role="button">Add new</a>
