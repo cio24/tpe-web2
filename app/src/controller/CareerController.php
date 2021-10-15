@@ -40,9 +40,10 @@ class CareerController
     function delete($careerId)
     {
         if (AuthHelper::checkLoggedIn()) {
-            header("Location:" . BASE_URL . "careers");
-            $this->model->delete($careerId);
-            $this->index();
+            if($this->model->delete($careerId))
+                header("Location:" . BASE_URL . "careers");
+            else
+                $this->index("This career cannot be delete 'cause it has subjects loaded");
         } else
             $this->index("You are not an administrator.");
     }
