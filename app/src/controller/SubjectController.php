@@ -17,11 +17,11 @@ class SubjectController
         $this->modelCareer = new CareerModel();
     }
 
-    function index()
+    function index($errorMessage="")
     {
         $subjectsData = $this->model->getAll();
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData,AuthHelper::checkLoggedIn());
+        $this->view->showAll($subjectsData, $careersData,AuthHelper::checkLoggedIn(),$errorMessage);
     }
 
     function show($subjectId)
@@ -31,30 +31,28 @@ class SubjectController
     }
     function add($subject)
     {
-        header("Location:" . BASE_URL . "subjects");
         $this->model->add($subject);
-        $this->index();
+        header("Location:" . BASE_URL . "subjects");
     }
     function delete($subjectId)
     {
-        header("Location:" . BASE_URL . "subjects");
-        $this->model->delete($subjectId);
-        $this->index();
+        if($this->model->delete($subjectId))
+            header("Location:" . BASE_URL . "subjects");
+        else
+            $this->index("This subjects cannot be delete 'cause is a requirement of another subject.");
     }
     function edit($subjectId)
     {
         $subjects=$this->model->getAll();
         $careers=$this->modelCareer->getAll();
         $subject=$this->model->get($subjectId);
-        //header("Location:" . BASE_URL . "subjects/edit"); no tengo donde redirigir
         $this->view->showEdit($subject,$subjects,$careers);
     }
     function update($subjectId,$subject)
     {
-        header("Location:" . BASE_URL . "subjects");
         $this->model->update($subjectId,$subject);
+        header("Location:" . BASE_URL . "subjects");
         $subjects=$this->model->getAll();
         $careers=$this->modelCareer->getAll();
-        $this->view->showAll($subjects,$careers,AuthHelper::checkLoggedIn());
     }
 }

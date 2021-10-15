@@ -6,6 +6,7 @@ class SubjectModel
     function __construct()
     {
         $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     function getAll()
@@ -35,22 +36,26 @@ class SubjectModel
     function add($subject)
     {
 
-        if($subject['direct_requirement'] == "null")
-            $subject['direct_requirement'] = null; 
-            
+        if ($subject['direct_requirement'] == "null")
+            $subject['direct_requirement'] = null;
+
         $query = $this->db->prepare("INSERT INTO subject (id, semester, year, name, direct_requirement, career) VALUES (NULL, ?, ?, ?, ?, ?);");
         $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career']));
-
     }
 
-    function update($subjectId,$subject)
+    function update($subjectId, $subject)
     {
+        if ($subject['direct_requirement'] == "null")
+            $subject['direct_requirement'] = null;
         $query = $this->db->prepare("UPDATE subject SET semester = ?,year = ?,name = ?,direct_requirement = ?, career = ? WHERE subject.id = ?;");
         $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $subjectId));
     }
     function delete($subjectId)
     {
-        $query = $this->db->prepare("DELETE FROM subject WHERE subject.id = ?");
-        $query->execute(array($subjectId));
+        try {
+            $query = $this->db->prepare("DELETE FROM subject WHERE id = ?");
+            $query->execute(array($subjectId));
+        } catch (PDOException $e) {
+        }
     }
 }
