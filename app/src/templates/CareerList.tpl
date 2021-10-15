@@ -2,7 +2,9 @@
 <body>
   {include file="header.tpl"}
   <h1 class="text-center">Carreras de la Facultad de Ciencias Exactas</h1>
-
+ {if $errorMessage neq ""} 
+  <h2 class="text-danger">{$errorMessage}</h2>
+{/if}
   {if $isLoggedIn}
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
       Agregar Carrera

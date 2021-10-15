@@ -10,6 +10,7 @@ class CareerModel
     }
     function getAll()
     {
+        
         $query = $this->db->prepare('SELECT * FROM career;');
         $query->execute();
         $careersData = $query->fetchAll(PDO::FETCH_OBJ);
