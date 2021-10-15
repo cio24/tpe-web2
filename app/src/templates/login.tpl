@@ -10,7 +10,7 @@
     <input type="submit" value="Submit">
   </form> 
   {if $errorMessage neq "" }
-    <h2>{$errorMessage}</h2>
+    <h2 class="text-danger">{$errorMessage}</h2>
   {/if}
   {include file="footer.tpl"}
 </body>

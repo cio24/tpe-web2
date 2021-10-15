@@ -12,7 +12,7 @@ class CareerView
     {
         $this->smarty = new Smarty();
     }
-    function showAll($careers,$isLoggedIn, $errorMessage)
+    function showAll($careers,$isLoggedIn, $errorMessage="")
     {
         $this->smarty->assign('isLoggedIn', $isLoggedIn);
         $this->smarty->assign('data', $careers);
