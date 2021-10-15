@@ -17,11 +17,11 @@ class SubjectController
         $this->modelCareer = new CareerModel();
     }
 
-    function index($errorMessage="")
+    function index($errorMessage = "")
     {
         $subjectsData = $this->model->getAll();
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData,AuthHelper::checkLoggedIn(),$errorMessage);
+        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), $errorMessage);
     }
 
     function show($subjectId)
@@ -36,23 +36,27 @@ class SubjectController
     }
     function delete($subjectId)
     {
-        if($this->model->delete($subjectId))
-            header("Location:" . BASE_URL . "subjects");
+        if (AuthHelper::checkLoggedIn()) {
+            if ($this->model->delete($subjectId))
+                header("Location:" . BASE_URL . "subjects");
+            else
+                $this->index("This subjects cannot be delete 'cause is a requirement of another subject.");
+        }
         else
-            $this->index("This subjects cannot be delete 'cause is a requirement of another subject.");
+            $this->index("You are not an administrator.");
     }
     function edit($subjectId)
     {
-        $subjects=$this->model->getAll();
-        $careers=$this->modelCareer->getAll();
-        $subject=$this->model->get($subjectId);
-        $this->view->showEdit($subject,$subjects,$careers);
+        $subjects = $this->model->getAll();
+        $careers = $this->modelCareer->getAll();
+        $subject = $this->model->get($subjectId);
+        $this->view->showEdit($subject, $subjects, $careers);
     }
-    function update($subjectId,$subject)
+    function update($subjectId, $subject)
     {
-        $this->model->update($subjectId,$subject);
+        $this->model->update($subjectId, $subject);
         header("Location:" . BASE_URL . "subjects");
-        $subjects=$this->model->getAll();
-        $careers=$this->modelCareer->getAll();
+        $subjects = $this->model->getAll();
+        $careers = $this->modelCareer->getAll();
     }
 }
