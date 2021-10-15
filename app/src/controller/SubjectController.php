@@ -31,8 +31,11 @@ class SubjectController
     }
     function add($subject)
     {
-        $this->model->add($subject);
-        header("Location:" . BASE_URL . "subjects");
+        if (AuthHelper::checkLoggedIn()) {
+            $this->model->add($subject);
+            header("Location:" . BASE_URL . "subjects");
+        } else
+            $this->index("You are not an administrator.");
     }
     function delete($subjectId)
     {
@@ -41,22 +44,27 @@ class SubjectController
                 header("Location:" . BASE_URL . "subjects");
             else
                 $this->index("This subjects cannot be delete 'cause is a requirement of another subject.");
-        }
-        else
+        } else
             $this->index("You are not an administrator.");
     }
     function edit($subjectId)
     {
-        $subjects = $this->model->getAll();
-        $careers = $this->modelCareer->getAll();
-        $subject = $this->model->get($subjectId);
-        $this->view->showEdit($subject, $subjects, $careers);
+        if (AuthHelper::checkLoggedIn()) {
+            $subjects = $this->model->getAll();
+            $careers = $this->modelCareer->getAll();
+            $subject = $this->model->get($subjectId);
+            $this->view->showEdit($subject, $subjects, $careers);
+        } else
+            $this->index("You are not an administrator.");
     }
     function update($subjectId, $subject)
     {
-        $this->model->update($subjectId, $subject);
-        header("Location:" . BASE_URL . "subjects");
-        $subjects = $this->model->getAll();
-        $careers = $this->modelCareer->getAll();
+        if (AuthHelper::checkLoggedIn()) {
+            $this->model->update($subjectId, $subject);
+            header("Location:" . BASE_URL . "subjects");
+            $subjects = $this->model->getAll();
+            $careers = $this->modelCareer->getAll();
+        } else
+            $this->index("You are not an administrator.");
     }
 }

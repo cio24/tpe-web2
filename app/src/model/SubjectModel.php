@@ -56,6 +56,8 @@ class SubjectModel
             $query = $this->db->prepare("DELETE FROM subject WHERE id = ?");
             $query->execute(array($subjectId));
         } catch (PDOException $e) {
+            return false;
         }
+        return true;
     }
 }
