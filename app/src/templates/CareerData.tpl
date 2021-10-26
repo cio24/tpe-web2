@@ -21,7 +21,7 @@
   </table>
 
 
-  <h1 style="text-align:center">Materias</h1>
+  <h1 class="text-center">Materias</h1>
 
   <table class="table table-hover">
     <thead>

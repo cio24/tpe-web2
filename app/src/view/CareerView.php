@@ -12,10 +12,11 @@ class CareerView
     {
         $this->smarty = new Smarty();
     }
-    function showAll($careers,$isLoggedIn)
+    function showAll($careers,$isLoggedIn, $errorMessage="")
     {
         $this->smarty->assign('isLoggedIn', $isLoggedIn);
         $this->smarty->assign('data', $careers);
+        $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->display('templates/CareerList.tpl');
     }
 

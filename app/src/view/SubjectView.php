@@ -12,10 +12,11 @@ class SubjectView
         $this->smarty = new Smarty();
     }
 
-    function showAll($subjectData, $careersData,$logged)
+    function showAll($subjectData, $careersData,$logged,$errorMessage)
     {
         $this->smarty->assign('subjectsData', $subjectData);
         $this->smarty->assign('careersData', $careersData);
+        $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->assign('logged',$logged);
         $this->smarty->display('templates/subjects.tpl');
     }

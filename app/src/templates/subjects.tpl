@@ -2,6 +2,9 @@
 <body>
   {include file="header.tpl"}
   <h1 class="text-center">Materias de la Facultad de Ciencias Exactas</h1>
+  {if $errorMessage neq ""} 
+    <p class="alert alert-danger" role="alert">{$errorMessage}</p>
+  {/if}
   {if $logged} 
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
       Agregar Materia

@@ -13,6 +13,7 @@ INSERT INTO subject (id, semester, year, name, direct_requirement, career) VALUE
     (NULL, 2, 1, 'Seminario Tecnológico 1', NULL, 1);
 
 
+-- password are cio and ema
 INSERT INTO user(email, password) VALUES
     ('cio@gmail.com', '$2y$10$tVl7v1N.jR3lnCVsM1JpLu7MfjOmHjtxn07dcUKiBBBsauEokrqkO'),
     ('ema@gmail.com', '$2y$10$16KKg0Zd2YfSoaaWBL0a3OEASzmOG5beIDYPaoZZfR0/zZicee/za');
