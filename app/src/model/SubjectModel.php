@@ -5,9 +5,11 @@ class SubjectModel
 
     function __construct()
     {
-        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=tpeweb2-data', 'root', '');
+        $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
-    function getAllSubjects()
+
+    function getAll()
     {
         $query = $this->db->prepare('SELECT a.id, a.name, a.year, a.semester, a.direct_requirement, b.name AS career FROM subject a LEFT JOIN career b ON a.career = b.id;');
         $query->execute();
@@ -15,7 +17,7 @@ class SubjectModel
         return $data;
     }
 
-    function getSubjects($careerId)
+    function getFilteredByCareer($careerId)
     {
         $query = $this->db->prepare('SELECT * FROM subject WHERE career = ?;');
         $query->execute(array($careerId));
@@ -25,25 +27,38 @@ class SubjectModel
 
     function get($subjectId)
     {
+        var_dump('model subject is is', $subjectId);
         $query = $this->db->prepare('SELECT s.*, c.name as "careerName"  FROM subject s JOIN career c on s.career = c.id WHERE s.id = ?;');
         $query->execute(array($subjectId));
         $subjectData = $query->fetchAll(PDO::FETCH_OBJ);
         return $subjectData;
     }
+
     function add($subject)
     {
-        $query = $this->db->prepare("INSERT INTO `subject` (`id`, `semester`, `year`, `name`, `direct_requirement`, `career`) VALUES (NULL, ?, ?, ?, ?, ?);");
-        var_dump($subject);
+
+        if ($subject['direct_requirement'] == "null")
+            $subject['direct_requirement'] = null;
+
+        $query = $this->db->prepare("INSERT INTO subject (id, semester, year, name, direct_requirement, career) VALUES (NULL, ?, ?, ?, ?, ?);");
         $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career']));
     }
-    function update($subjectId,$subject)
+
+    function update($subjectId, $subject)
     {
-        $query = $this->db->prepare("UPDATE `subject` SET `semester` = ?,`year` = ?,`name` = ?,`direct_requirement` = ?, `career` = ? WHERE `subject`.`id` = ?;");
+        if ($subject['direct_requirement'] == "null")
+            $subject['direct_requirement'] = null;
+        $query = $this->db->prepare("UPDATE subject SET semester = ?,year = ?,name = ?,direct_requirement = ?, career = ? WHERE subject.id = ?;");
         $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $subjectId));
     }
     function delete($subjectId)
     {
-        $query = $this->db->prepare("DELETE FROM `subject` WHERE `subject`.`id` = ?");
-        $query->execute(array($subjectId));
+        try {
+            $query = $this->db->prepare("DELETE FROM subject WHERE id = ?");
+            $query->execute(array($subjectId));
+        } catch (PDOException $e) {
+            return false;
+        }
+        return true;
     }
 }

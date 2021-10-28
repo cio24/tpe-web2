@@ -2,7 +2,7 @@
 
 require_once './../vendor/autoload.php';
 
-class AuthView {
+class SessionView {
 
     private $smarty;
 
