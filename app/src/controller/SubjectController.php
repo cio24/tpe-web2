@@ -17,16 +17,16 @@ class SubjectController
         $this->modelCareer = new CareerModel();
     }
 
-    function index($errorMessage = "")
+    function index()
     {
         $subjectsData = $this->model->getAll();
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), $errorMessage);
+        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(),'');
     }
 
-    function show($subjectId)
-    {
-        $subjectData = $this->model->get($subjectId);
+    function show($params)
+    {   
+        $subjectData = $this->model->get($params[':ID']);
         $this->view->showSubject($subjectData);
     }
     function add($subject)
@@ -57,8 +57,10 @@ class SubjectController
         } else
             $this->index("You are not an administrator.");
     }
-    function update($subjectId, $subject)
+    function update($params)
     {
+        $subjectId = $params[':ID'];
+        $subject = $_POST;
         if (AuthHelper::checkLoggedIn()) {
             $this->model->update($subjectId, $subject);
             header("Location:" . BASE_URL . "subjects");

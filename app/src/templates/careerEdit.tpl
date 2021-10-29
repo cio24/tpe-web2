@@ -2,7 +2,7 @@
 <body>
     {include file="header.tpl"}
     <h1 class="text-center">Editar Carrera</h1>
-    <form class="container" action="/careers/{$career->id}/edit/update" method="post">
+    <form class="container" action="/careers/{$career->id}/update" method="post">
         <div class="mb-3">
             <label for="name">Nombre</label>
             <input type="text" class="form-control" name="name" id="name" value="{$career->name}">
