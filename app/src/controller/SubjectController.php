@@ -29,17 +29,21 @@ class SubjectController
         $subjectData = $this->model->get($params[':ID']);
         $this->view->showSubject($subjectData);
     }
-    function add($subject)
+
+    function add()
     {
+        $subjectData = $_POST;
         if (AuthHelper::checkLoggedIn()) {
-            $this->model->add($subject);
-            header("Location:" . BASE_URL . "subjects");
+            $this->model->add($subjectData);
+            $this->index();
         } else
             $this->index("You are not an administrator.");
     }
-    function delete($subjectId)
+
+    function delete($params)
     {
         if (AuthHelper::checkLoggedIn()) {
+            $subjectId = $params[':ID'];
             if ($this->model->delete($subjectId))
                 header("Location:" . BASE_URL . "subjects");
             else
@@ -47,9 +51,10 @@ class SubjectController
         } else
             $this->index("You are not an administrator.");
     }
-    function edit($subjectId)
+    function edit($params)
     {
         if (AuthHelper::checkLoggedIn()) {
+            $subjectId = $params[':ID'];
             $subjects = $this->model->getAll();
             $careers = $this->modelCareer->getAll();
             $subject = $this->model->get($subjectId);
@@ -59,13 +64,12 @@ class SubjectController
     }
     function update($params)
     {
-        $subjectId = $params[':ID'];
-        $subject = $_POST;
         if (AuthHelper::checkLoggedIn()) {
+            $subjectId = $params[':ID'];
+            print_r($subjectId);
+            $subject = $_POST;
             $this->model->update($subjectId, $subject);
-            header("Location:" . BASE_URL . "subjects");
-            $subjects = $this->model->getAll();
-            $careers = $this->modelCareer->getAll();
+            $this->index();
         } else
             $this->index("You are not an administrator.");
     }

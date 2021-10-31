@@ -2,7 +2,7 @@
 <body>
     {include file="header.tpl"}
     <h1 class="text-center">Editar Materia</h1>
-    <form class="container" action="/subjects/{$subject[0]->id}/edit/update" method="post">
+    <form class="container" action="/subjects/{$subject[0]->id}/update" method="post">
         <div class="mb-3">
             <label for="name">Nombre</label>
             <input type="text" class="form-control" name="name" value="{$subject[0]->name}">

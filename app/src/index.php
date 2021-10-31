@@ -49,11 +49,11 @@ $router->addRoute('subjects/:ID', 'GET', 'SubjectController', 'show');
 $router->addRoute('subjects/:ID/edit', 'GET', 'SubjectController', 'edit');
 
 //action: add a new subject
-$router->addRoute('subjects/POST', 'POST', 'SubjectController', 'add');
+$router->addRoute('subjects/add', 'POST', 'SubjectController', 'add');
 //action: update a subject
-$router->addRoute('subjects/update', 'POST', 'SubjectController', 'update');
+$router->addRoute('subjects/:ID/update', 'POST', 'SubjectController', 'update');
 //action: delete a subject
-$router->addRoute('subjects', 'GET', 'SubjectController', 'delete');
+$router->addRoute('subjects/:ID/delete', 'GET', 'SubjectController', 'delete');
 
 
 $router->setDefaultRoute("HomeController", "index");

@@ -33,7 +33,6 @@ class CareerController
     {
         if (AuthHelper::checkLoggedIn()) {
             $career = $_POST;
-            header("Location:" . BASE_URL . "careers");
             $this->model->add($career);
             $this->index('');
         } else
