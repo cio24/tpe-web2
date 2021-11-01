@@ -10,7 +10,7 @@ $sessionController = new SessionController();
 $subjectController = new SubjectController();
 $careerController = new CareerController();
 $homeController = new HomeController();
-$userController= new UserController();
+$userController = new UserController();
 
 //routes constants
 define("BASE_URL", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]));
@@ -36,7 +36,7 @@ switch ($params[1]) {
         break;
 
     case 'verifyUser':
-        $sessionController->verifyUser();
+        $sessionController->verifyUser($_POST);
         break;
 
     case 'logout':
@@ -48,7 +48,7 @@ switch ($params[1]) {
         break;
 
     case 'users':
-        if ($params[2]=='add') {
+        if ($params[2] == 'add') {
             $userController->add($_POST);
             break;
         }

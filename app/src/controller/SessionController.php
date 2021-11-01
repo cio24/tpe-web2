@@ -31,21 +31,16 @@ class SessionController
         header("Location:" . BASE_URL . "home");
     }
 
-    function verifyUser()
+    function verifyUser($user)
     {
-        //getting the form data loaded by the user 
-        $email = $_POST['userEmail'];
-        $password = $_POST['userPassword'];
-
         //getting (if exists) the user data associated with the given email 
-        $user = $this->userModel->get($email);
+        $userData = $this->userModel->get($user['email']);
 
         //save the session if the password is correct
-        if (!empty($user) && password_verify($password, $user->password)) {
+        if (!empty($userData) && password_verify($user['password'], $userData->password)) {
             //session_start();
-            AuthHelper::saveSession($user->email);
+            AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "home");
-            $this->homeView->showHome();
         } else
             $this->loginView->showLogin("This user is not registered or the information is wrong");
     }

@@ -6,6 +6,7 @@ class UserModel
     function __construct()
     {
         $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
+        $this->db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     }
 
     function get($email)
@@ -26,7 +27,7 @@ class UserModel
 
     function add($user)
     {
-        $query = $this->db->prepare("INSERT INTO user (email, password) VALUES (?, ?);");
-        $query->execute(array($user['email'], $user['password']));
+        $query = $this->db->prepare("INSERT INTO user (email, password, permission) VALUES (?, ?, ?);");
+        $query->execute(array($user['email'], $user['password'], $user['permission']));
     }
 }
