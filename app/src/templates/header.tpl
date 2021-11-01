@@ -15,6 +15,7 @@
         </ul>
         <form class="d-flex">
             <a class="nav-link" aria-current="page" href={$action}> {$action} </a>
+            <a class="nav-link" aria-current="page" href="logup"> logup </a>
         </form>
         </div>
     </div>

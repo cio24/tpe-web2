@@ -3,12 +3,14 @@ require_once 'controller/SessionController.php';
 require_once 'controller/CareerController.php';
 require_once 'controller/SubjectController.php';
 require_once 'controller/HomeController.php';
+require_once 'controller/UserController.php';
 
 //controllers
 $sessionController = new SessionController();
 $subjectController = new SubjectController();
 $careerController = new CareerController();
 $homeController = new HomeController();
+$userController= new UserController();
 
 //routes constants
 define("BASE_URL", 'http://' . $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER["PHP_SELF"]));
@@ -40,6 +42,16 @@ switch ($params[1]) {
     case 'logout':
         $sessionController->logout();
         break;
+
+    case 'logup':
+        $userController->index();
+        break;
+
+    case 'users':
+        if ($params[2]=='add') {
+            $userController->add($_POST);
+            break;
+        }
 
     case 'subjects':
         //actions
