@@ -25,12 +25,12 @@ CREATE TABLE user (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE comment{
+CREATE TABLE comment (
   subject_id int NOT NULL,
   user_id INT NOT NULL,
   comment varchar(250) NOT NULL,  
   difficulty int NOT NULL,
   PRIMARY KEY (subject_id,user_id),
   FOREIGN KEY (subject_id) REFERENCES subject(id),
-  FOREIGN KEY (user_id) REFERENCES user(id),
-}
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
