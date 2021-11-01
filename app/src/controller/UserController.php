@@ -32,12 +32,17 @@ class UserController
     }
     function add($user)
     {
-        $user['permission'] = "standard";
-        $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
-        $this->model->add($user);
-        $userData = json_encode($user);
-        AuthHelper::saveSession($userData);
-        header("Location: " . BASE_URL . "home");
+        $userData = $this->model->get($user['email']);
+        if (!$userData) {
+            $user['permission'] = "standard";
+            $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+            $this->model->add($user);
+            $userData = $this->model->get($user['email']);
+            AuthHelper::saveSession($userData);
+            header("Location: " . BASE_URL . "home");
+        } else {
+            echo 'El usuario ya existe';
+        }
     }
     function delete($userId)
     {
