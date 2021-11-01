@@ -16,7 +16,12 @@ class UserView
     }
     function showUsers($users)
     {
-        $this->smarty->assign('users',$users);
+        $this->smarty->assign('users', $users);
         $this->smarty->display('templates/users.tpl');
+    }
+    function showEdit($user)
+    {
+        $this->smarty->assign('user', $user);
+        $this->smarty->display('templates/userEdit.tpl');
     }
 }

@@ -6,7 +6,7 @@ class UserModel
     function __construct()
     {
         $this->db = new PDO('mysql:host=mysql-tpeweb2-c;port=3306;dbname=db-tpe-web2', 'root', '');
-        $this->db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     function get($email)
@@ -29,5 +29,15 @@ class UserModel
     {
         $query = $this->db->prepare("INSERT INTO user (email, password, permission) VALUES (?, ?, ?);");
         $query->execute(array($user['email'], $user['password'], $user['permission']));
+    }
+    function delete($userId)
+    {
+        $query = $this->db->prepare("DELETE FROM user WHERE email = ?");
+        $query->execute(array($userId));
+    }
+    function update($userId, $userData)
+    {
+        $query = $this->db->prepare("UPDATE user SET permission = ? WHERE user.email = ?;");
+        $query->execute(array($userData['permission'], $userId));
     }
 }

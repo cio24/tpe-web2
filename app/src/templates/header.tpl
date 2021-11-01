@@ -12,10 +12,17 @@
             <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="subjects">Subjects</a>
             </li>
+            {if $admin}
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="users">Users</a>
+                </li>
+            {/if}
         </ul>
         <form class="d-flex">
             <a class="nav-link" aria-current="page" href={$action}> {$action} </a>
-            <a class="nav-link" aria-current="page" href="logup"> logup </a>
+            {if $action=='login'}
+                <a class="nav-link" aria-current="page" href="logup"> logup </a>
+            {/if}
         </form>
         </div>
     </div>

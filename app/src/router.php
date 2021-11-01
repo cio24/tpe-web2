@@ -52,6 +52,20 @@ switch ($params[1]) {
             $userController->add($_POST);
             break;
         }
+        if ($params[3] != null && $params[3] == 'delete') {
+            $userController->delete($params[2]);
+            break;
+        }
+        if ($params[4] != null && $params[4] == 'update') {
+            $userController->update($params[2], $_POST);
+            break;
+        }
+        if ($params[3] != null && $params[3] == 'edit') {
+            $userController->edit($params[2]);
+            break;
+        }
+        $userController->show();
+        break;
 
     case 'subjects':
         //actions
