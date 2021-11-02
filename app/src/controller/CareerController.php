@@ -16,29 +16,31 @@ class CareerController
         $this->subjectModel = new SubjectModel();
     }
 
-    function index($errorMessage="")
+    function index($params)
     {
         $careersData = $this->model->getAll();
-        $this->view->showAll($careersData, AuthHelper::checkLoggedIn(), $errorMessage);
+        $this->view->showAll($careersData, AuthHelper::checkLoggedIn(), '');
     }
 
-    function show($careerId)
+    function show($params)
     {
+        $careerId = $params[':ID'];
         $careerData = $this->model->get($careerId);
         $subjectsDataOfCareer = $this->subjectModel->getFilteredByCareer($careerId);
         $this->view->showOne($careerData, $subjectsDataOfCareer);
     }
-    function add($career)
+    function add()
     {
         if (AuthHelper::checkLoggedIn()) {
-            header("Location:" . BASE_URL . "careers");
+            $career = $_POST;
             $this->model->add($career);
-            $this->index();
+            $this->index('');
         } else
             $this->index("You are not an administrator.");
     }
-    function delete($careerId)
+    function delete($params)
     {
+        $careerId = $params[':ID'];
         if (AuthHelper::checkLoggedIn()) {
             if($this->model->delete($careerId))
                 header("Location:" . BASE_URL . "careers");
@@ -47,18 +49,20 @@ class CareerController
         } else
             $this->index("You are not an administrator.");
     }
-    function edit($careerId)
+    function edit($params)
     {
         if (AuthHelper::checkLoggedIn()) {
+            $careerId = $params[':ID'];
             $career = $this->model->get($careerId);
-            //header("Location:" . BASE_URL . "subjects/edit"); no tengo donde redirigir
             $this->view->showEdit($career);
         } else
             $this->index("You are not an administrator.");
     }
-    function update($careerId, $career)
+    function update($params)
     {
         if (AuthHelper::checkLoggedIn()) {
+            $careerId = $params[':ID'];
+            $career = $_POST;
             header("Location:" . BASE_URL . "careers");
             $this->model->update($careerId, $career);
             $careers = $this->model->getAll();
