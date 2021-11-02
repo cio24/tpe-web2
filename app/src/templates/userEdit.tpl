@@ -2,7 +2,7 @@
 <body>
     {include file="header.tpl"}
     <h1 class="text-center">Editar Usuario</h1>
-    <form class="container" action="/users/{$user->email}/edit/update" method="post">
+    <form class="container" action="/users/{$user->email}/update" method="post">
         <div class="mb-3">
             <h2 class="text-center">{$user->email}</h2>
         </div>

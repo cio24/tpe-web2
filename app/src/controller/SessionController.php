@@ -31,14 +31,13 @@ class SessionController
         header("Location:" . BASE_URL . "home");
     }
 
-    function verifyUser($user)
+    function verifyUser()
     {
         //getting (if exists) the user data associated with the given email 
-        $userData = $this->userModel->get($user['email']);
+        $userData = $this->userModel->get($_POST['email']);
 
         //save the session if the password is correct
-        if (!empty($userData) && password_verify($user['password'], $userData->password)) {
-            //session_start();
+        if (!empty($userData) && password_verify($_POST['password'], $userData->password)) {
             AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "home");
         } else

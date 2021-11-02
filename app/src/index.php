@@ -4,6 +4,7 @@ require_once './controller/HomeController.php';
 require_once './controller/SessionController.php';
 require_once './controller/CareerController.php';
 require_once './controller/SubjectController.php';
+require_once './controller/UserController.php';
 require_once 'Router.php';
 
 //routes constants
@@ -55,6 +56,19 @@ $router->addRoute('subjects/:ID/update', 'POST', 'SubjectController', 'update');
 //action: delete a subject
 $router->addRoute('subjects/:ID/delete', 'GET', 'SubjectController', 'delete');
 
+//USERS ROUTES
+//view: form to create a new user
+$router->addRoute('logup', 'GET', 'UserController', 'index');
+//view: all users
+$router->addRoute('users', 'GET', 'UserController', 'show');
+//view: edit form for a user
+$router->addRoute('users/:ID/edit', 'GET', 'UserController', 'edit');
+//action: add a new user
+$router->addRoute('users/add', 'POST', 'UserController', 'add');
+//action: update a user
+$router->addRoute('users/:ID/update', 'POST', 'UserController', 'update');
+//action: delete a user
+$router->addRoute('users/:ID/delete', 'GET', 'UserController', 'delete');
 
 $router->setDefaultRoute("HomeController", "index");
 

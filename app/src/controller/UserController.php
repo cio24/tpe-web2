@@ -30,8 +30,9 @@ class UserController
             header("Location: " . BASE_URL . "home");
         }
     }
-    function add($user)
+    function add()
     {
+        $user = $_POST;
         $userData = $this->model->get($user['email']);
         if (!$userData) {
             $user['permission'] = "standard";
@@ -44,25 +45,26 @@ class UserController
             echo 'El usuario ya existe';
         }
     }
-    function delete($userId)
+    function delete($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $this->model->delete($userId);
+            $this->model->delete($params[':ID']);
             header("Location: " . BASE_URL . "users");
         }
     }
-    function edit($userId)
+    function edit($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $user = $this->model->get($userId);
+            $user = $this->model->get($params[':ID']);
             $this->view->showEdit($user);
         } else
             $this->index("You are not an administrator.");
     }
-    function update($userId, $userData)
+    function update($params)
     {
+        $userData = $_POST;
         if (AuthHelper::checkAdmin()) {
-            $this->model->update($userId, $userData);
+            $this->model->update($params[':ID'], $userData);
             header("Location:" . BASE_URL . "users");
         } else
             $this->index("You are not an administrator.");
