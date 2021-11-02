@@ -12,7 +12,7 @@ class UserView
     }
     function showLogup($errorMessage = '')
     {
-        $this->smarty->assign($errorMessage);
+        $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->display('templates/logup.tpl');
     }
     function showUsers($users)

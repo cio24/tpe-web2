@@ -4,7 +4,6 @@ require_once './view/HomeView.php';
 class HomeController
 {
     private $view;
-    private $HomeView;
 
     function __construct()
     {

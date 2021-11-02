@@ -2,20 +2,20 @@
 
 require_once 'model/UserModel.php';
 require_once 'view/UserView.php';
-require_once 'controller/SessionController.php';
+require_once 'view/HomeView.php';
 require_once 'helpers/AuthHelper.php';
 
 class UserController
 {
     private $model;
     private $view;
-    private $sessionController;
+    private $homeView;
 
     function __construct()
     {
         $this->model = new UserModel();
         $this->view = new UserView();
-        $this->sessionController = new SessionController();
+        $this->homeView = new HomeView();
     }
     function index()
     {
@@ -26,9 +26,8 @@ class UserController
         if (AuthHelper::checkAdmin()) {
             $users = $this->model->getAll();
             $this->view->showUsers($users);
-        } else {
-            header("Location: " . BASE_URL . "home");
-        }
+        } else
+            $this->homeView->showHome("You are not an administrator.");
     }
     function add()
     {
@@ -41,16 +40,16 @@ class UserController
             $userData = $this->model->get($user['email']);
             AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "home");
-        } else {
-            echo 'El usuario ya existe';
-        }
+        } else
+            $this->view->showLogup('User already exists');
     }
     function delete($params)
     {
         if (AuthHelper::checkAdmin()) {
             $this->model->delete($params[':ID']);
             header("Location: " . BASE_URL . "users");
-        }
+        } else
+            $this->homeView->showHome("You are not an administrator.");
     }
     function edit($params)
     {
@@ -58,7 +57,7 @@ class UserController
             $user = $this->model->get($params[':ID']);
             $this->view->showEdit($user);
         } else
-            $this->index("You are not an administrator.");
+            $this->homeView->showHome("You are not an administrator.");
     }
     function update($params)
     {
@@ -67,6 +66,6 @@ class UserController
             $this->model->update($params[':ID'], $userData);
             header("Location:" . BASE_URL . "users");
         } else
-            $this->index("You are not an administrator.");
+            $this->homeView->showHome("You are not an administrator.");
     }
 }

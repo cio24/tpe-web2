@@ -8,6 +8,9 @@
         <label for="userPassword">Contraseña</label>
         <input type="password" name="password" id="password" class="form-control">
         <input type="submit" value="Submit">
-    </form>  
+    </form>
+    {if $errorMessage neq "" }
+        <p class="alert alert-danger" role="alert">{$errorMessage}</p>
+    {/if}
     {include file="footer.tpl"}
 </body>

@@ -7,15 +7,12 @@ include_once './helpers/AuthHelper.php';
 
 class SessionController
 {
-
     private $loginView;
-    private $homeView;
     private $userModel;
 
     function __construct()
     {
         $this->loginView = new SessionView();
-        $this->homeView = new HomeView();
         $this->userModel = new UserModel();
     }
 

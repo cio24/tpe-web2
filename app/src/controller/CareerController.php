@@ -31,7 +31,7 @@ class CareerController
     }
     function add()
     {
-        if (AuthHelper::checkLoggedIn()) {
+        if (AuthHelper::checkAdmin()) {
             $career = $_POST;
             $this->model->add($career);
             $this->index('');
@@ -41,8 +41,8 @@ class CareerController
     function delete($params)
     {
         $careerId = $params[':ID'];
-        if (AuthHelper::checkLoggedIn()) {
-            if($this->model->delete($careerId))
+        if (AuthHelper::checkAdmin()) {
+            if ($this->model->delete($careerId))
                 header("Location:" . BASE_URL . "careers");
             else
                 $this->index("This career cannot be delete 'cause it has subjects loaded");
@@ -51,7 +51,7 @@ class CareerController
     }
     function edit($params)
     {
-        if (AuthHelper::checkLoggedIn()) {
+        if (AuthHelper::checkAdmin()) {
             $careerId = $params[':ID'];
             $career = $this->model->get($careerId);
             $this->view->showEdit($career);
@@ -60,7 +60,7 @@ class CareerController
     }
     function update($params)
     {
-        if (AuthHelper::checkLoggedIn()) {
+        if (AuthHelper::checkAdmin()) {
             $careerId = $params[':ID'];
             $career = $_POST;
             header("Location:" . BASE_URL . "careers");

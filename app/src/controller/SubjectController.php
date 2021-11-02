@@ -21,11 +21,11 @@ class SubjectController
     {
         $subjectsData = $this->model->getAll();
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(),'');
+        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), '');
     }
 
     function show($params)
-    {   
+    {
         $subjectData = $this->model->get($params[':ID']);
         $this->view->showSubject($subjectData);
     }
@@ -33,7 +33,7 @@ class SubjectController
     function add()
     {
         $subjectData = $_POST;
-        if (AuthHelper::checkLoggedIn()) {
+        if (AuthHelper::checkAdmin()) {
             $this->model->add($subjectData);
             $this->index();
         } else
@@ -42,7 +42,7 @@ class SubjectController
 
     function delete($params)
     {
-        if (AuthHelper::checkLoggedIn()) {
+        if (AuthHelper::checkAdmin()) {
             $subjectId = $params[':ID'];
             if ($this->model->delete($subjectId))
                 header("Location:" . BASE_URL . "subjects");
@@ -53,7 +53,7 @@ class SubjectController
     }
     function edit($params)
     {
-        if (AuthHelper::checkLoggedIn()) {
+        if (AuthHelper::checkAdmin()) {
             $subjectId = $params[':ID'];
             $subjects = $this->model->getAll();
             $careers = $this->modelCareer->getAll();
@@ -64,7 +64,7 @@ class SubjectController
     }
     function update($params)
     {
-        if (AuthHelper::checkLoggedIn()) {
+        if (AuthHelper::checkAdmin()) {
             $subjectId = $params[':ID'];
             print_r($subjectId);
             $subject = $_POST;
