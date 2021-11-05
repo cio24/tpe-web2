@@ -22,13 +22,24 @@ class APICommentController extends APIController {
         }
     }
 
-    public function getAll($params = null)
+    public function get($params = null)
     {
         $comments = $this->model->getAll();
         if (!empty($comments))
             $this->view->response($comments, 200);
         else {
             $this->view->response("No se encontraron comentarios", 404);
+        }
+    }
+
+    public function post($params = null)
+    {
+        $data = $this->getData();
+        $comment = $this->model->create($data);
+        if ($comment)
+            $this->view->response($comment, 201);
+        else {
+            $this->view->response("No se pudo crear el comentario", 500);
         }
     }
 }

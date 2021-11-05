@@ -23,12 +23,12 @@ class APICommentModel
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
-    function add($commentData)
+    function create($data)
     {
-        $query = $this->db->prepare("INSERT INTO comment (subject_id, user_id, comment, difficulty) VALUES (NULL, ?, ?, ?, ?);");
-        $query->execute(array($commentData['subjectId'], $commentData['userId'], $commentData['comment'], $commentData['difficulty']));
+        $query = $this->db->prepare('INSERT INTO comment (subject_id, user_id, comment, difficulty) VALUES (?, ?, ?, ?);');
+        $query->execute([$data->subject_id, $data->user_id, $data->comment, $data->difficulty]);
+        return $this->db->lastInsertId();
     }
-
 
     function delete($subjectId)
     {
