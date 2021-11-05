@@ -1,5 +1,7 @@
 <?php
-require_once "./../APIView.php";
+
+require_once '/var/www/app/src/api/APIView.php';
+
 
 abstract class APIController
 {

@@ -35,7 +35,6 @@ class SubjectModel
 
     function add($subject)
     {
-        print_r($subject);
 
         if ($subject['direct_requirement'] == "null")
             $subject['direct_requirement'] = null;
