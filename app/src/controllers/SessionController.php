@@ -1,8 +1,8 @@
 <?php
 
-include_once './view/SessionView.php';
-include_once './view/HomeView.php';
-include_once './model/UserModel.php';
+include_once './views/SessionView.php';
+include_once './views/HomeView.php';
+include_once './models/UserModel.php';
 include_once './helpers/AuthHelper.php';
 
 class SessionController

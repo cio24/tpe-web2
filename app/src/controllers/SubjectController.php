@@ -1,6 +1,6 @@
 <?php
-require_once './model/SubjectModel.php';
-require_once './view/SubjectView.php';
+require_once './models/SubjectModel.php';
+require_once './views/SubjectView.php';
 require_once './helpers/AuthHelper.php';
 
 

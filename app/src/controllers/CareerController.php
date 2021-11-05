@@ -1,7 +1,7 @@
 <?php
-require_once './model/CareerModel.php';
-require_once './view/CareerView.php';
-require_once './model/SubjectModel.php';
+require_once './models/CareerModel.php';
+require_once './views/CareerView.php';
+require_once './models/SubjectModel.php';
 
 class CareerController
 {

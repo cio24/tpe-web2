@@ -1,5 +1,5 @@
 <?php
-require_once './view/HomeView.php';
+require_once './views/HomeView.php';
 
 class HomeController
 {

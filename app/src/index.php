@@ -1,9 +1,9 @@
 <?php
 
-require_once './controller/HomeController.php';
-require_once './controller/SessionController.php';
-require_once './controller/CareerController.php';
-require_once './controller/SubjectController.php';
+require_once './controllers/HomeController.php';
+require_once './controllers/SessionController.php';
+require_once './controllers/CareerController.php';
+require_once './controllers/SubjectController.php';
 require_once 'Router.php';
 
 //routes constants
