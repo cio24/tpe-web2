@@ -13,8 +13,9 @@ INSERT INTO subject (id, semester, year, name, direct_requirement, career) VALUE
     (NULL, 2, 1, 'Seminario Tecnológico 1', NULL, 1);
 
 
--- password are cio and ema
-INSERT INTO user(email, password) VALUES
-    ('cio@gmail.com', '$2y$10$tVl7v1N.jR3lnCVsM1JpLu7MfjOmHjtxn07dcUKiBBBsauEokrqkO'),
-    ('ema@gmail.com', '$2y$10$16KKg0Zd2YfSoaaWBL0a3OEASzmOG5beIDYPaoZZfR0/zZicee/za');
+-- password are cio, ema and test
+INSERT INTO `user` (`email`, `password`, `permission`) VALUES
+    ('cio@gmail.com', '$2y$10$JXb8s3mW0.igP.k93aGcNuXv/FwR5lUq3RSaupV/HzUsQzK/HkY96', 'admin'),
+    ('ema@gmail.com', '$2y$10$16KKg0Zd2YfSoaaWBL0a3OEASzmOG5beIDYPaoZZfR0/zZicee/za', 'admin'),
+    ('usuario@prueba.com', '$2y$10$waFHtBkoyZjciTX7MwcnNO7JGqogO6.ZZSMD5XE7YQw5H4IvFM10K', 'standard');
 

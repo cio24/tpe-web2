@@ -22,5 +22,6 @@ CREATE TABLE subject (
 CREATE TABLE user (
   email varchar(100)  NOT NULL,
   password varchar(100) NOT NULL,
+  permission varchar(10) NOT NULL,
   PRIMARY KEY (email)
 );
