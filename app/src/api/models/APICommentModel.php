@@ -16,6 +16,13 @@ class APICommentModel
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
+    function getFilteredByUser($userId)
+    {
+        $query = $this->db->prepare('SELECT * FROM comment where id_user = ?;');
+        $query->execute([$userId]);
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
     function getAll()
     {
         $query = $this->db->prepare('SELECT * FROM comment;');
@@ -23,22 +30,32 @@ class APICommentModel
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
+    function get($id)
+    {
+        $query = $this->db->prepare('SELECT * FROM comment where id = ?;');
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+
     function create($data)
     {
-        $query = $this->db->prepare('INSERT INTO comment (subject_id, user_id, comment, difficulty) VALUES (?, ?, ?, ?);');
-        $query->execute([$data->subject_id, $data->user_id, $data->comment, $data->difficulty]);
+        try {
+            $query = $this->db->prepare('INSERT INTO comment (id, user_id, subject_id, comment, difficulty) VALUES (NULL, ?, ?, ?, ?);');
+            $query->execute([$data['user_id'], $data['subject_id'], $data['comment'], $data['difficulty']]);
+        } catch (PDOException $e) {
+            return null;
+        }
         return $this->db->lastInsertId();
     }
 
-    function delete($subjectId)
+    function delete($id)
     {
-        try {
-            $query = $this->db->prepare("DELETE FROM subject WHERE id = ?");
-            $query->execute(array($subjectId));
+       try {
+            $query = $this->db->prepare('DELETE FROM comment WHERE id = ?;');
+            $query->execute([$id]);
         } catch (PDOException $e) {
             return false;
         }
         return true;
-    }
-    
+    }  
 }
