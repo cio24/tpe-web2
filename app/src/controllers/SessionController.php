@@ -7,15 +7,12 @@ include_once './helpers/AuthHelper.php';
 
 class SessionController
 {
-
     private $loginView;
-    private $homeView;
     private $userModel;
 
     function __construct()
     {
         $this->loginView = new SessionView();
-        $this->homeView = new HomeView();
         $this->userModel = new UserModel();
     }
 
@@ -33,19 +30,13 @@ class SessionController
 
     function verifyUser()
     {
-        //getting the form data loaded by the user 
-        $email = $_POST['userEmail'];
-        $password = $_POST['userPassword'];
-
-        //getting (if exists) the user data associated with the given email 
-        $user = $this->userModel->get($email);
+        //getting (if exists) the user data associated with the given  id 
+        $userData = $this->userModel->getByEmail($_POST['email']);
 
         //save the session if the password is correct
-        if (!empty($user) && password_verify($password, $user->password)) {
-            //session_start();
-            AuthHelper::saveSession($user->email);
+        if (!empty($userData) && password_verify($_POST['password'], $userData->password)) {
+            AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "home");
-            $this->homeView->showHome();
         } else
             $this->loginView->showLogin("This user is not registered or the information is wrong");
     }

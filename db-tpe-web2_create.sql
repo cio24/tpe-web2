@@ -22,6 +22,7 @@ CREATE TABLE user (
   id int NOT NULL AUTO_INCREMENT,
   email varchar(100)  NOT NULL,
   password varchar(100) NOT NULL,
+  permission boolean NOT NULL,
   PRIMARY KEY (id)
 );
 

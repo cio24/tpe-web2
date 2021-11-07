@@ -13,10 +13,11 @@ INSERT INTO subject (id, semester, year, name, direct_requirement, career) VALUE
     (NULL, 2, 1, 'Seminario Tecnológico 1', NULL, 1);
 
 
--- password are cio and ema
-INSERT INTO user(id,email, password) VALUES
-    (NULL,'cio@gmail.com', '$2y$10$tVl7v1N.jR3lnCVsM1JpLu7MfjOmHjtxn07dcUKiBBBsauEokrqkO'),
-    (NULL,'ema@gmail.com', '$2y$10$16KKg0Zd2YfSoaaWBL0a3OEASzmOG5beIDYPaoZZfR0/zZicee/za');
+-- password are cio, ema and test
+INSERT INTO user (email, password, permission) VALUES
+    ('cio@gmail.com', '$2y$10$upi5wgUxXhgbgAW1z0iKbekkqF0Q0496Cm6oIkLKBjcJgGJZZ3/MK', 1),
+    ('ema@gmail.com', '$2y$10$/XesZLm8YNdddV6Oy.vQ3e/jbA2YMe5ZtcUFAf.KgVznoWGqcIxMy', 1),
+    ('usuario@prueba.com', '$2y$10$Yd0Dd0W9c9vbK6tchWIzBeiTi32Cm5AVU9Rr.QwSeAvtSVxZoHh3W', 0);
 
 
 INSERT INTO comment (subject_id, user_id,comment,difficulty) VALUES
@@ -27,9 +28,3 @@ INSERT INTO comment (subject_id, user_id,comment,difficulty) VALUES
 (5,1,'Malisimaa',1),
 (6,2,'media media',2),
 (7,1,'sin comentarios',3);
-
-
-
-
-
-

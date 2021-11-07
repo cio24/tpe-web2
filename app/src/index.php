@@ -4,6 +4,7 @@ require_once './controllers/HomeController.php';
 require_once './controllers/SessionController.php';
 require_once './controllers/CareerController.php';
 require_once './controllers/SubjectController.php';
+require_once './controllers/UserController.php';
 require_once 'Router.php';
 
 //routes constants
@@ -17,8 +18,8 @@ $router = new Router();
 $router->addRoute('home', 'GET', 'HomeController', 'index');
 
 //SESSION ROUTES
-$router->addRoute('login', 'GET', 'SessionController', 'index');
-$router->addRoute('logout', 'GET', 'SessionController', 'logout');
+$router->addRoute('signin', 'GET', 'SessionController', 'index');
+$router->addRoute('signout', 'GET', 'SessionController', 'logout');
 $router->addRoute('verifyUser', 'POST', 'SessionController', 'verifyUser');
 
 //CAREERS ROUTES
@@ -55,6 +56,21 @@ $router->addRoute('subjects/:ID/update', 'POST', 'SubjectController', 'update');
 //action: delete a subject
 $router->addRoute('subjects/:ID/delete', 'GET', 'SubjectController', 'delete');
 
+
+
+//USERS ROUTES
+//view: form to create a new user
+$router->addRoute('signup', 'GET', 'UserController', 'index');
+//view: all users
+$router->addRoute('users', 'GET', 'UserController', 'show');
+//view: edit form for a user
+$router->addRoute('users/:ID/edit', 'GET', 'UserController', 'edit');
+//action: add a new user
+$router->addRoute('users/add', 'POST', 'UserController', 'add');
+//action: update a user
+$router->addRoute('users/:ID/update', 'POST', 'UserController', 'update');
+//action: delete a user
+$router->addRoute('users/:ID/delete', 'GET', 'UserController', 'delete');
 
 $router->setDefaultRoute("HomeController", "index");
 

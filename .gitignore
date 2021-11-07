@@ -2,4 +2,4 @@
 templates_c
 vendor
 .vscode
-temp.html
+app/src/templates/temp.html
