@@ -33,18 +33,18 @@ class SubjectModel
         return $subjectData;
     }
 
-    function add($subject, $tempImageFile = null, $tempImageName = null)
+    function add($subject, $tempImageFile = null, $imagePath = null)
     {
-        $imagePath = null;
-
-        if (isset($tempImageFile)) {
-            $imageName = $tempImageName;
-            $imagePath = 'assets/images/subjects/' . $imageName;
+        if (!empty($tempImageFile))
             move_uploaded_file($tempImageFile, $imagePath);
-        }
 
-        $query = $this->db->prepare("INSERT INTO subject (id, semester, year, name, direct_requirement, career, image_path) VALUES (NULL, ?, ?, ?, ?, ?, ?);");
+        $query = $this->db->prepare("INSERT INTO subject (semester, year, name, direct_requirement, career, image_path) VALUES (?, ?, ?, ?, ?, ?);");
         $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $imagePath]);
+    }
+
+    function saveImage($tempImageFile, $tempImagePath)
+    {
+        move_uploaded_file($tempImageFile, $tempImagePath);
     }
 
     function update($subjectId, $subject)
