@@ -32,14 +32,12 @@ class SubjectController
 
     function add()
     {
-
-
         if (!AuthHelper::checkAdmin())
             return $this->index("You are not an administrator.");
 
         // is an admin so we check if there are all required data
 
-        $subjectData = $_POST;
+        $subjectData = $_POST; 
         $errors = $this->validateSubjectData($subjectData);
         if (count($errors) > 0) {
             // print errors
@@ -57,12 +55,22 @@ class SubjectController
             $subjectData['direct_requirement'] = null;
 
             
-        // The file uploaded is an image so we add it to the server
+        // Get the info of the image loaded
         $tempImageFile = $_FILES['input_image']['tmp_name'];
         $tempImageName = $_FILES['input_image']['name'];
-        $this->model->add($subjectData, $tempImageFile, $tempImageName);
+
+        // if the image is not empty
+        if(!empty($tempImageFile)){
+            $imagePath = 'assets/images/subjects/' . uniqid() . "." . strtolower(pathinfo($tempImageName, PATHINFO_EXTENSION));
+    
+            $this->model->add($subjectData, $tempImageFile, $imagePath);
+        }
+        else
+            $this->model->add($subjectData);
+        
         return $this->index("The subject has been created.");
     }
+
 
     function validateSubjectData($subjectData)
     {
@@ -83,10 +91,10 @@ class SubjectController
         return $errors;
     }
 
-    // function isImageType($type)
-    // {
-    //     return ($type == 'image/png' || $type == 'image/jpg' || $type == 'image/jpeg');
-    // }
+    function isImageTypeValid($type)
+    {
+        return ($type == 'image/png' || $type == 'image/jpg' || $type == 'image/jpeg');
+    }
 
     function delete($params)
     {

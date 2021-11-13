@@ -3,3 +3,4 @@ templates_c
 vendor
 .vscode
 app/src/templates/temp.html
+assets
