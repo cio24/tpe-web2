@@ -19,7 +19,7 @@ class APICommentController extends APIController
         if (!empty($comments))
             $this->view->response($comments, 200);
         else {
-            $this->view->response("No se encontraron comentarios de la materia", 404);
+            $this->view->response("No comments found.", 404);
         }
     }
 
@@ -29,40 +29,36 @@ class APICommentController extends APIController
         if (!empty($comments))
             $this->view->response($comments, 200);
         else {
-            $this->view->response("No se encontraron comentarios", 404);
+            $this->view->response("No comments found.", 404);
         }
     }
 
     public function post($params = null)
     {
-            $data = $this->getData();
-            $comment = $this->model->getByUserAndSubject($data['subject_id'], $data['user_id']);
-            if (!empty($comment)) {
-                $this->view->response("El ususario ya ha comentado esta materia", 409);
-            } else {
-                $commentId = $this->model->create($data);
-                if (!empty($commentId))
-                    $this->view->response($commentId, 201);
-                else {
-                    $this->view->response("No se pudo crear el comentario", 500);
-                }
+        $data = $this->getData();
+        $comment = $this->model->getByUserAndSubject($data['subject_id'], $data['user_id']);
+        if (!empty($comment)) {
+            $this->view->response("The user has already commented this subject.", 409);
+        } else {
+            $commentId = $this->model->create($data);
+            if (!empty($commentId))
+                $this->view->response($commentId, 201);
+            else {
+                $this->view->response("No comments found.", 500);
             }
-
+        }
     }
 
     public function delete($params = null)
     {
-        if (AuthHelper::checkAdmin()) {
-            $commentId = $params[':ID'];
-            if ($this->model->get($commentId)) {
-                if ($this->model->delete($commentId))
-                    $this->view->response("Comentario eliminado", 200);
-                else
-                    $this->view->response("No se pudo eliminar el comentario", 500);
-            } else {
-                $this->view->response("No se encontró el comentario", 404);
-            }
-        } else
-            $this->view->response("El usuario no esta logeado o no tiene permisos para eliminar comentarios", 401);
+        $commentId = $params[':ID'];
+        if ($this->model->get($commentId)) {
+            if ($this->model->delete($commentId))
+                $this->view->response("Comment deleted.", 200);
+            else
+                $this->view->response("The comment could not be deleted.", 500);
+        } else {
+            $this->view->response("No comments found.", 404);
+        }
     }
 }
