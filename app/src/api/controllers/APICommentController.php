@@ -35,9 +35,9 @@ class APICommentController extends APIController
 
     public function post($params = null)
     {
-        if (AuthHelper::checkLoggedIn()) {
             $data = $this->getData();
-            $comment = $this->model->get($data['subject_id'], $data['user_id']);
+            $comment = $this->model->getByUserAndSubject($data['subject_id'], $data['user_id']);
+            print_r($comment);
             if (!empty($comment)) {
                 $this->view->response("El ususario ya ha comentado esta materia", 409);
             } else {
@@ -48,8 +48,7 @@ class APICommentController extends APIController
                     $this->view->response("No se pudo crear el comentario", 500);
                 }
             }
-        } else
-            $this->view->response("El usuario no esta logeado", 401);
+
     }
 
     public function delete($params = null)

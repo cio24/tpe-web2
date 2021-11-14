@@ -37,6 +37,13 @@ class APICommentModel
         return $query->fetch(PDO::FETCH_OBJ);
     }
 
+    function getByUserAndSubject($userId, $subjectId)
+    {
+        $query = $this->db->prepare('SELECT * FROM comment where user_id = ? and subject_id = ?;');
+        $query->execute([$userId, $subjectId]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+
     function create($data)
     {
         try {
