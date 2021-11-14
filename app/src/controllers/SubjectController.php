@@ -12,6 +12,7 @@ class SubjectController
 
     public function __construct()
     {
+
         $this->model = new SubjectModel();
         $this->view = new SubjectView();
         $this->modelCareer = new CareerModel();
@@ -32,6 +33,7 @@ class SubjectController
 
     public function edit($params)
     {
+
         if (AuthHelper::checkAdmin()) {
             $subjectId = $params[':ID'];
             $subject = $this->model->get($subjectId);
@@ -46,7 +48,7 @@ class SubjectController
             $this->index("You are not an administrator.");
     }
 
-    public function add()
+    public function add($params = null)
     {
         if (!AuthHelper::checkAdmin())
             return $this->index("You are not an administrator.");
@@ -61,7 +63,6 @@ class SubjectController
         // if the subject has not a requirement we change the string to a null value por the database
         if ($subjectData['direct_requirement'] == "null")
             $subjectData['direct_requirement'] = null;
-
 
         // if the image is not empty
         if (isset($_FILES['input_image'])) {
@@ -87,7 +88,7 @@ class SubjectController
             if (empty($subjectData))
                 return $this->index("The subject does not exist.");
 
-            if (isset($subjectData->image_path))
+            if (!empty($subjectData->image_path))
                 if ($this->model->deleteImage($subjectData->image_path))
 
                     if ($this->model->delete($subjectId))
@@ -95,7 +96,7 @@ class SubjectController
                     else
                         $this->index("This subjects cannot be delete 'cause is a requirement of another subject.");
         } else
-            $this->index("You are not an administrator.");
+            $this->index(null, "You are not an administrator.");
     }
 
     public function update($params)
@@ -107,18 +108,18 @@ class SubjectController
 
             if ($subjectData['direct_requirement'] == "null")
                 $subjectData['direct_requirement'] = null;
-
             if (isset($_FILES['input_image'])) {
                 if (!$this->isImageTypeValid($_FILES['input_image']['type']))
                     return $this->index(null, "The image type is not valid.");
 
                 $tempImageFile = $_FILES['input_image']['tmp_name'];
                 $tempImageName = $_FILES['input_image']['name'];
-                $this->model->deleteImage($subjectData['image_path']);
+                $this->model->deleteImage($this->model->get($subjectId)->image_path);
                 $this->model->update($subjectId, $subjectData, $tempImageFile, $this->getNewUniqueImagePath($tempImageName));
             } else
                 $this->model->update($subjectId, $subjectData);
-            $this->index();
+
+            $this->index(null, "Subject updated");
         } else
             $this->index("You are not an administrator.");
     }
@@ -150,7 +151,6 @@ class SubjectController
             $errors['career'] = 'Career input is not valid.';
 
         if (count($errors) > 0) {
-            // print errors
             $errorsStrings = '';
             foreach ($errors as $error)
                 $errorsStrings .= $error . '<br>';

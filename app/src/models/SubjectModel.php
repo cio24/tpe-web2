@@ -52,8 +52,8 @@ class SubjectModel
         if (!empty($tempImageFile))
             $this->saveImage($tempImageFile, $imagePath);
 
-        $query = $this->db->prepare("UPDATE subject SET semester = ?,year = ?,name = ?,direct_requirement = ?, career = ? WHERE subject.id = ?;");
-        $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $subjectId));
+        $query = $this->db->prepare("UPDATE subject SET semester = ?,year = ?,name = ?,direct_requirement = ?, career = ?, image_path = ? WHERE subject.id = ?;");
+        $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $imagePath, $subjectId ]);
     }
 
     function delete($subjectId)

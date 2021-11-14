@@ -1,7 +1,7 @@
 {include file="head-html.tpl"}
 <body>
   {include file="header.tpl"}
-  <h1 class="text-center">{$subjectData.name}</h1>
+  <h1 class="text-center">{$subjectData->name}</h1>
 
   <table class="table table-hover">
     <thead>
@@ -14,10 +14,10 @@
     </thead>
     <tbody>
       <tr>
-        <td>{$subjectData.year}</td>
-        <td>{$subjectData.semester}</td>
-        <td>{$subjectData.direct_requirement}</td>
-        <td>{$subjectData.careerName}</td>
+        <td>{$subjectData->year}</td>
+        <td>{$subjectData->semester}</td>
+        <td>{$subjectData->direct_requirement}</td>
+        <td>{$subjectData->careerName}</td>
       </tr>
     </tbody>
   </table>

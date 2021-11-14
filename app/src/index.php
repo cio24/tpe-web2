@@ -74,4 +74,5 @@ $router->addRoute('users/:ID/delete', 'GET', 'UserController', 'delete');
 
 $router->setDefaultRoute("HomeController", "index");
 
+
 $router->route($_GET['action'], $_SERVER['REQUEST_METHOD']);

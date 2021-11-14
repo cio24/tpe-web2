@@ -37,7 +37,6 @@ class APICommentController extends APIController
     {
             $data = $this->getData();
             $comment = $this->model->getByUserAndSubject($data['subject_id'], $data['user_id']);
-            print_r($comment);
             if (!empty($comment)) {
                 $this->view->response("El ususario ya ha comentado esta materia", 409);
             } else {
