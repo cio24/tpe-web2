@@ -17,11 +17,11 @@ class SubjectController
         $this->modelCareer = new CareerModel();
     }
 
-    function index()
+    function index($params = null, $mesagge = '')
     {
         $subjectsData = $this->model->getAll();
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), '');
+        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), $mesagge);
     }
 
     function show($params)
@@ -32,12 +32,68 @@ class SubjectController
 
     function add()
     {
-        $subjectData = $_POST;
-        if (AuthHelper::checkAdmin()) {
+        if (!AuthHelper::checkAdmin())
+            return $this->index("You are not an administrator.");
+
+        // is an admin so we check if there are all required data
+
+        $subjectData = $_POST; 
+        $errors = $this->validateSubjectData($subjectData);
+        if (count($errors) > 0) {
+            // print errors
+            $errorsStrings = '';
+            foreach ($errors as $error)
+                $errorsStrings .= $error . '<br>';
+            return $this->index($errorsStrings);
+        }
+
+
+        // no errors so we can add the subject
+
+        // if the subject has not a requirement we change the string to a null value por the database
+        if ($subjectData['direct_requirement'] == "null")
+            $subjectData['direct_requirement'] = null;
+
+            
+        // Get the info of the image loaded
+        $tempImageFile = $_FILES['input_image']['tmp_name'];
+        $tempImageName = $_FILES['input_image']['name'];
+
+        // if the image is not empty
+        if(!empty($tempImageFile)){
+            $imagePath = 'assets/images/subjects/' . uniqid() . "." . strtolower(pathinfo($tempImageName, PATHINFO_EXTENSION));
+    
+            $this->model->add($subjectData, $tempImageFile, $imagePath);
+        }
+        else
             $this->model->add($subjectData);
-            $this->index();
-        } else
-            $this->index("You are not an administrator.");
+        
+        return $this->index("The subject has been created.");
+    }
+
+
+    function validateSubjectData($subjectData)
+    {
+        $errors = [];
+
+        if (empty($subjectData['semester']))
+            $errors['semester'] = 'Semester is required.';
+
+        if (empty($subjectData['year']))
+            $errors['year'] = 'Year is required.';
+
+        if (empty($subjectData['name']))
+            $errors['name'] = 'Name is required.';
+
+        if (empty($subjectData['career']))
+            $errors['career'] = 'Career is required.';
+
+        return $errors;
+    }
+
+    function isImageTypeValid($type)
+    {
+        return ($type == 'image/png' || $type == 'image/jpg' || $type == 'image/jpeg');
     }
 
     function delete($params)
@@ -66,7 +122,6 @@ class SubjectController
     {
         if (AuthHelper::checkAdmin()) {
             $subjectId = $params[':ID'];
-            print_r($subjectId);
             $subject = $_POST;
             $this->model->update($subjectId, $subject);
             $this->index();

@@ -11,7 +11,7 @@
     </button>
 
     <div class="collapse container" id="collapseExample">
-      <form action="/subjects/add" method="post">
+      <form action="/subjects/add" method="post"  enctype="multipart/form-data">
         <div class="mb-3">
           <label for="name" class="form-label">Nombre</label>
           <input type="text" name="name" id="name" class="form-control">
@@ -41,6 +41,12 @@
             {/foreach}}
           </select>
         </div>
+
+        {* load image *}
+        <div class="mb-3">
+          <label for="image" class="form-label">Imagen</label>
+          <input type="file" name="input_image" id="image"  accept="image/png, image/jpg, image/jpeg"  class="form-control">
+        </div>
         <button class="btn" type="submit">Enviar</button>
       </form>
     </div>
@@ -54,9 +60,11 @@
         <th>Cuatrimestre</th>
         <th>Correlativa</th>
         <th>Carrera</th>
+        <th>Imagen</th>
         {if $logged}
           <th>Editar</th>
           <th>Borrar</th>
+          
         {/if}
       </tr>
     </thead>
@@ -68,6 +76,12 @@
           <td>{$subject->semester}</td>
           <td>{$subject->direct_requirement}</td>
           <td>{$subject->career}</td>
+          {if $subject->image_path} 
+            <td><img src={$subject->image_path} /></td>
+          {else}
+            <td>Sin imagen</td>
+          {/if}
+
           {if $logged}
             <td><a class="btn bi bi-pencil-square" href="/subjects/{$subject->id}/edit"></a></td>
             <td><a class="btn bi bi-trash" href="/subjects/{$subject->id}/delete"></a></td>
