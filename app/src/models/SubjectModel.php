@@ -29,14 +29,14 @@ class SubjectModel
     {
         $query = $this->db->prepare('SELECT s.*, c.name as "careerName"  FROM subject s JOIN career c on s.career = c.id WHERE s.id = ?;');
         $query->execute(array($subjectId));
-        $subjectData = $query->fetchAll(PDO::FETCH_OBJ);
+        $subjectData = $query->fetch(PDO::FETCH_OBJ);
         return $subjectData;
     }
 
     function add($subject, $tempImageFile = null, $imagePath = null)
     {
         if (!empty($tempImageFile))
-            move_uploaded_file($tempImageFile, $imagePath);
+            $this->saveImage($tempImageFile, $imagePath);
 
         $query = $this->db->prepare("INSERT INTO subject (semester, year, name, direct_requirement, career, image_path) VALUES (?, ?, ?, ?, ?, ?);");
         $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $imagePath]);
@@ -47,13 +47,15 @@ class SubjectModel
         move_uploaded_file($tempImageFile, $tempImagePath);
     }
 
-    function update($subjectId, $subject)
+    function update($subjectId, $subject, $tempImageFile = null, $imagePath = null)
     {
-        if ($subject['direct_requirement'] == "null")
-            $subject['direct_requirement'] = null;
+        if (!empty($tempImageFile))
+            $this->saveImage($tempImageFile, $imagePath);
+
         $query = $this->db->prepare("UPDATE subject SET semester = ?,year = ?,name = ?,direct_requirement = ?, career = ? WHERE subject.id = ?;");
         $query->execute(array($subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $subjectId));
     }
+
     function delete($subjectId)
     {
         try {
@@ -63,5 +65,10 @@ class SubjectModel
             return false;
         }
         return true;
+    }
+
+    function deleteImage($imagePath)
+    {
+        return unlink($imagePath);
     }
 }

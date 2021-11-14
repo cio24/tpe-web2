@@ -11,44 +11,7 @@
     </button>
 
     <div class="collapse container" id="collapseExample">
-      <form action="/subjects/add" method="post"  enctype="multipart/form-data">
-        <div class="mb-3">
-          <label for="name" class="form-label">Nombre</label>
-          <input type="text" name="name" id="name" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="year" class="form-label">Año</label>
-          <input type="number" name="year" id="year" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="semester" class="form-label">Cuatrimestre</label>
-          <input type="number" name="semester" id="semester" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="direct_requirement" class="form-label">Correlativa</label>
-          <select name="direct_requirement" id="direct_requirement" class="form-control">
-            <option selected value="null">Sin Correlativas</option>
-            {foreach from=$subjectsData item=$subject}
-              <option value="{$subject->id}">{$subject->name}</option>
-            {/foreach}}
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="career" class="form-label">Carrera</label>
-          <select name="career" id="career" class="form-control">
-            {foreach from=$careersData item=$career}
-              <option value="{$career->id}">{$career->name}</option>
-            {/foreach}}
-          </select>
-        </div>
-
-        {* load image *}
-        <div class="mb-3">
-          <label for="image" class="form-label">Imagen</label>
-          <input type="file" name="input_image" id="image"  accept="image/png, image/jpg, image/jpeg"  class="form-control">
-        </div>
-        <button class="btn" type="submit">Enviar</button>
-      </form>
+    {include file="subjectForm.tpl"}
     </div>
   {/if}
 
