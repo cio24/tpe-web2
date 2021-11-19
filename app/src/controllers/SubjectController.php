@@ -9,6 +9,7 @@ class SubjectController
     private $model;
     private $modelCareer;
     private $view;
+    private const MAX_SUBJECTS_PER_PAGE = 10;
 
     public function __construct()
     {
@@ -20,9 +21,17 @@ class SubjectController
 
     public function index($params = null, $mesagge = '')
     {
-        $subjectsData = $this->model->getAll();
+        $limit = self::MAX_SUBJECTS_PER_PAGE;
+        $maxPageNumber = ceil($this->model->getSubjectsCount() / $limit);
+        $pageNumber = $params[':PAGE_NUMBER'];
+        if ($pageNumber > $maxPageNumber)
+            $pageNumber = $maxPageNumber;
+        $offset = ($pageNumber - 1) * $limit;
+
+        $subjectsData = $this->model->getAll($offset, $limit);
+
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), $mesagge);
+        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), $mesagge, $pageNumber, $maxPageNumber);
     }
 
     public function show($params)

@@ -9,12 +9,22 @@ class SubjectModel
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    function getAll()
+
+    public function getSubjectsCount()
     {
-        $query = $this->db->prepare('SELECT s.*, c.name AS career FROM subject s JOIN career c ON s.career = c.id;');
+        $query = "SELECT COUNT(*) FROM subject";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    function getAll($offset, $limit)
+    {
+        $query = $this->db->prepare('SELECT s.*, c.name AS career FROM subject s JOIN career c ON s.career = c.id LIMIT :LIMIT OFFSET :OFFSET');
+        $query->bindParam(':LIMIT', $limit, PDO::PARAM_INT);
+        $query->bindParam(':OFFSET', $offset, PDO::PARAM_INT);
         $query->execute();
-        $data = $query->fetchAll(PDO::FETCH_OBJ);
-        return $data;
+        return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
     function getFilteredByCareer($careerId)

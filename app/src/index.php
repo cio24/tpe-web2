@@ -43,7 +43,7 @@ $router->addRoute('careers/:ID/delete', 'GET', 'CareerController', 'delete');
 //SUBJECTS ROUTES
 
 //view: all subjects and a form for create a new one (admins only)
-$router->addRoute('subjects', 'GET', 'SubjectController', 'index');
+$router->addRoute('subjects/page/:PAGE_NUMBER', 'GET', 'SubjectController', 'index');
 //view: an specific subject
 $router->addRoute('subjects/:ID', 'GET', 'SubjectController', 'show');
 //view: edit form for a subject

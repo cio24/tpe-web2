@@ -50,3 +50,12 @@
     {/foreach}
 </tbody>
 </table>
+<div class="d-flex justify-content-center">
+{if $pageNumber > 1}
+<a class="btn btn-outline-dark mx-1" href="/subjects/page/{$pageNumber - 1}" role="button"><</a>
+{/if}
+<button type="button" class="btn btn-light" disabled>{$pageNumber}</button>
+{if $pageNumber < $maxPageNumber}
+<a class="btn btn-outline-dark mx-1" href="/subjects/page/{$pageNumber + 1}" role="button">></a>
+{/if}
+</div>

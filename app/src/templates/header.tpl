@@ -10,7 +10,7 @@
             <a class="nav-link active" aria-current="page" href="careers">Careers</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="subjects">Subjects</a>
+            <a class="nav-link active" aria-current="page" href="subjects/page/1">Subjects</a>
             </li>
             {if $admin}
                 <li class="nav-item">

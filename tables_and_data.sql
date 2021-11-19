@@ -67,6 +67,7 @@ INSERT INTO subject (semester, year, name, direct_requirement, career) VALUES
   (1, 1, 'Taller de Matemática Compuracional ', NULL, 1),
   (1, 1, 'Inglés 1', NULL, 1),
   (2, 1, 'Tecnología de la Información en las Organizaciones', NULL, 1),
+  (2, 1, 'Técnicas de Validación y Documentación', NULL, 1),
   (2, 1, 'Web 2', 2, 1),
   (2, 1, 'Programación 2', 1, 1),
   (2, 1, 'Inglés 2', 4, 1),
@@ -76,7 +77,13 @@ INSERT INTO subject (semester, year, name, direct_requirement, career) VALUES
   (2, 1, 'Análisis y diseño de algoritmos II', NULL, 2),
   (2, 1, 'Introducción a la Programación I', NULL, 2),
   (2, 1, 'Física General', NULL, 2),
-  (2, 1, 'Álgebra Lineal', NULL, 2);
+  (2, 1, 'Álgebra Lineal', NULL, 2),
+  (1, 2, 'Introducción a la Arquitectura de Sistemas', NULL, 2),
+  (1, 5, 'Fundamentos de Economía y Proyectos de Inversion', NULL, 2),
+  (2, 1, 'Ingeniería de Software', NULL, 2),
+  (2, 1, 'Teoría de la Información', NULL, 2),
+  (2, 1, 'Arquitectura I', NULL, 2);
+ 
  
 INSERT INTO comment (subject_id, user_id,comment,difficulty) VALUES
   (1,1,'Muy buena',4),

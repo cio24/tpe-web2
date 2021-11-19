@@ -12,7 +12,7 @@ class SubjectView
         $this->smarty = new Smarty();
     }
 
-    function showAll($subjectData, $careersData,$logged, $errorMessage)
+    function showAll($subjectData, $careersData,$logged, $errorMessage,$pageNumber, $maxPageNumber)
     {
         $this->smarty->assign('admin', AuthHelper::checkAdmin());
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
@@ -21,7 +21,9 @@ class SubjectView
         $this->smarty->assign('careersData', $careersData);
         $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->assign('logged',$logged);
-        $this->smarty->assign('addOrUpdate', 'add');                
+        $this->smarty->assign('addOrUpdate', 'add');     
+        $this->smarty->assign('pageNumber', $pageNumber); 
+        $this->smarty->assign('maxPageNumber', $maxPageNumber);          
         $this->smarty->display('templates/subjectsPage.tpl');
 
     }
