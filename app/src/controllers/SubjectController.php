@@ -26,8 +26,9 @@ class SubjectController
 
     function show($params)
     {
+        $userId = 1;
         $subjectData = $this->model->get($params[':ID']);
-        $this->view->showSubject($subjectData);
+        $this->view->showSubject($subjectData, $userId, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
     function add()

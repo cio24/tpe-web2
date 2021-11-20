@@ -2,6 +2,7 @@
 
 require_once '/var/www/app/src/api/controllers/APIController.php';
 require_once '/var/www/app/src/api/models/APICommentModel.php';
+require_once '/var/www/app/src/helpers/AuthHelper.php';
 
 class APICommentController extends APIController
 {
@@ -35,20 +36,19 @@ class APICommentController extends APIController
 
     public function post($params = null)
     {
-            $data = $this->getData();
-            $comment = $this->model->getByUserAndSubject($data['subject_id'], $data['user_id']);
-            print_r($comment);
-            if (!empty($comment)) {
-                $this->view->response("El ususario ya ha comentado esta materia", 409);
-            } else {
-                $commentId = $this->model->create($data);
-                if (!empty($commentId))
-                    $this->view->response($commentId, 201);
-                else {
-                    $this->view->response("No se pudo crear el comentario", 500);
-                }
+        $data = $this->getData();
+        $comment = $this->model->getByUserAndSubject($data['subject_id'], $data['user_id']);
+        print_r($comment);
+        if (!empty($comment)) {
+            $this->view->response("El ususario ya ha comentado esta materia", 409);
+        } else {
+            $commentId = $this->model->create($data);
+            if (!empty($commentId))
+                $this->view->response($commentId, 201);
+            else {
+                $this->view->response("No se pudo crear el comentario", 500);
             }
-
+        }
     }
 
     public function delete($params = null)
