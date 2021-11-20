@@ -51,6 +51,7 @@
 </tbody>
 </table>
 <div class="d-flex justify-content-center">
+
 {if $pageNumber > 1}
 <a class="btn btn-outline-dark mx-1" href="/subjects/page/{$pageNumber - 1}" role="button"><</a>
 {/if}

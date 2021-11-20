@@ -7,10 +7,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="careers">Careers</a>
+                <a class="nav-link active" aria-current="page" href="careers">Careers</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="subjects/page/1">Subjects</a>
+                <a class="nav-link active" aria-current="page" href="subjects/page/1">Subjects</a>
+            </li>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="subjects/searcher">Search</a>
             </li>
             {if $admin}
                 <li class="nav-item">
