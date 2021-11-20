@@ -19,12 +19,32 @@ class SubjectController
         $this->modelCareer = new CareerModel();
     }
 
+    public function showSearcher($params = null, $message = '')
+    {
+        $this->view->showSubjectsSearcher();
+    }
+
+    public function search($params = null){
+        $criteria = $_POST;
+        if(empty($criteria['s_name']) && empty($criteria['c_name']) && empty($criteria['s_year']) && empty($criteria['s_semester']))
+            return $this->index(null, 'Yoy have to add a search criteria.');
+
+        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
+        $subjects = $this->model->search($criteria);
+        $careersData = $this->modelCareer->getAll();
+        $this->view->showSearchResult($subjects, $action, $careersData);
+    }
+
     public function index($params = null, $mesagge = '')
     {
         $limit = self::MAX_SUBJECTS_PER_PAGE;
+
         $maxPageNumber = ceil($this->model->getSubjectsCount() / $limit);
+
         $pageNumber = $params[':PAGE_NUMBER'];
-        if ($pageNumber > $maxPageNumber)
+        if(empty($pageNumber))
+            $pageNumber = 1;
+        elseif ($pageNumber > $maxPageNumber)
             $pageNumber = $maxPageNumber;
         $offset = ($pageNumber - 1) * $limit;
 
@@ -49,8 +69,8 @@ class SubjectController
             if (empty($subject))
                 return $this->index(null, "The subject does not exist.");
 
-            $subjects = $this->model->getAll();
-            $careers = $this->modelCareer->getAll();
+            $subjects = $this->model->getAll(1,self::MAX_SUBJECTS_PER_PAGE);
+            $careers = $this->modelCareer->getAll(1,self::MAX_SUBJECTS_PER_PAGE);
 
             $this->view->showEdit($subject, $subjects, $careers);
         } else

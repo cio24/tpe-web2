@@ -12,6 +12,15 @@ class SubjectView
         $this->smarty = new Smarty();
     }
 
+    function showSearchResult($subjectData, $action, $careerData){
+        $this->smarty->assign('subjectData', $subjectData);
+        $this->smarty->assign('action', $action);
+        $this->smarty->assign('careerData', $careerData);
+        $this->smarty->assign('subjectsData', $subjectData);
+        $this->smarty->assign('errorMessage', '');
+        $this->smarty->display('templates/subjectsSearchResultPage.tpl');
+    }
+
     function showAll($subjectData, $careersData,$logged, $errorMessage,$pageNumber, $maxPageNumber)
     {
         $this->smarty->assign('admin', AuthHelper::checkAdmin());
@@ -45,5 +54,9 @@ class SubjectView
         $this->smarty->assign('subject',$subject);
         $this->smarty->assign('addOrUpdate',"update");
         $this->smarty->display('templates/subjectEditPage.tpl');
+    }
+
+    public function showSubjectsSearcher(){
+        $this->smarty->display('templates/subjectsSearcherPage.tpl');
     }
 }

@@ -1,6 +1,6 @@
 {include file="head-html.tpl"}
 <body>
-    {include file="header.tpl"}
+    {include file="navbar.tpl"}
     <h1 class="text-center">Edit Career</h1>
     <form class="container" action="/careers/{$career->id}/update" method="post">
         <div class="mb-3">

@@ -9,6 +9,28 @@ class SubjectModel
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    public function search($criteria)
+    {
+        $partialQuery = "SELECT s.*, c.name AS career FROM subject s JOIN career c ON s.career = c.id WHERE";
+        // iterate through the criteria and add them to the query
+        foreach ($criteria as $key => $value){
+            if(empty($value))
+                continue;
+            $key = str_replace('_', '.', $key);
+            $partialQuery .= " $key LIKE '%$value%' AND";
+        }
+
+        // remove the last AND
+        $partialQuery = substr($partialQuery, 0, -3);
+        print_r($partialQuery);
+
+        $query = $this->db->prepare($partialQuery);
+        foreach ($criteria as $key => $value)
+            $query->bindValue(":$key", $value);
+
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
 
     public function getSubjectsCount()
     {
