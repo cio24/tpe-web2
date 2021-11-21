@@ -12,13 +12,13 @@ class CareerView
     {
         $this->smarty = new Smarty();
     }
-    function showAll($careers,$isLoggedIn, $errorMessage="")
-    
+    function showAll($careers, $admin, $errorMessage = "")
+
     {
         $this->smarty->assign('admin', AuthHelper::checkAdmin());
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
         $this->smarty->assign('action', $action);
-        $this->smarty->assign('isLoggedIn', $isLoggedIn);
+        $this->smarty->assign('admin', $admin);
         $this->smarty->assign('data', $careers);
         $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->display('templates/careersPage.tpl');
@@ -31,7 +31,7 @@ class CareerView
         $this->smarty->assign('action', $action);
         $this->smarty->assign('careerData', $careerData);
         $this->smarty->assign('subjectsDataOfCareer', $subjectsDataOfCareer);
-                $this->smarty->assign('admin', AuthHelper::checkAdmin());
+        $this->smarty->assign('admin', AuthHelper::checkAdmin());
         $this->smarty->display('templates/careerPage.tpl');
     }
     function showEdit($career)
@@ -39,7 +39,7 @@ class CareerView
         $this->smarty->assign('admin', AuthHelper::checkAdmin());
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
         $this->smarty->assign('action', $action);
-        $this->smarty->assign('career',$career);
+        $this->smarty->assign('career', $career);
         $this->smarty->display('templates/careerEditPage.tpl');
     }
 }

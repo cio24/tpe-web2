@@ -32,12 +32,12 @@ class UserController
     function add()
     {
         $user = $_POST;
-        $userData = $this->model->get($user['email']);
+        $userData = $this->model->getByEmail($user['email']);
         if (!$userData) {
-            $user['permission'] = "standard";
+            $user['permission'] = "0";
             $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
             $this->model->add($user);
-            $userData = $this->model->get($user['email']);
+            $userData = $this->model->getByEmail($user['email']);
             AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "home");
         } else

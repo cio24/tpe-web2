@@ -12,8 +12,8 @@
             <tr>
                 <td>{$user->email}</td>
                 <td>{$user->permission}</td>
-                <td><a class="btn bi bi-pencil-square" href="/users/{$user->email}/edit"></a></td>
-                <td><a class="btn bi bi-trash" href="/users/{$user->email}/delete"></a></td>
+                <td><a class="btn bi bi-pencil-square" href="/users/{$user->id}/edit"></a></td>
+                <td><a class="btn bi bi-trash" href="/users/{$user->id}/delete"></a></td>
             </tr>
         {/foreach}
     </tbody>

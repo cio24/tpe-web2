@@ -1,5 +1,5 @@
 <h1 class="text-center">Edit user</h1>
-<form class="container" action="/users/{$user->email}/update" method="post">
+<form class="container" action="/users/{$user->id}/update" method="post">
     <div class="mb-3">
         <h2 class="text-center">{$user->email}</h2>
     </div>

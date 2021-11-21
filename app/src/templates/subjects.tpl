@@ -2,7 +2,7 @@
 {if $errorMessage neq ""} 
 <p class="alert alert-danger" role="alert">{$errorMessage}</p>
 {/if}
-{if $logged} 
+{if $admin} 
 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
     Create subject
 </button>
@@ -21,7 +21,7 @@
     <th>Requirement</th>
     <th>Career</th>
     <th>Image</th>
-    {if $logged}
+    {if $admin}
         <th>Edit</th>
         <th>Delete</th>
         
@@ -42,7 +42,7 @@
         <td>No image</td>
         {/if}
 
-        {if $logged}
+        {if $admin}
         <td><a class="btn bi bi-pencil-square" href="/subjects/{$subject->id}/edit"></a></td>
         <td><a class="btn bi bi-trash" href="/subjects/{$subject->id}/delete"></a></td>
         {/if}

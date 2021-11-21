@@ -19,7 +19,7 @@ class CareerController
     function index($params)
     {
         $careersData = $this->model->getAll();
-        $this->view->showAll($careersData, AuthHelper::checkLoggedIn(), '');
+        $this->view->showAll($careersData, AuthHelper::checkAdmin(), '');
     }
 
     function show($params)

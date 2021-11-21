@@ -11,7 +11,7 @@ class UserModel
 
     function get($id)
     {
-        $query = $this->db->prepare('SELECT * FROM user WHERE email = ?;');
+        $query = $this->db->prepare('SELECT * FROM user WHERE id = ?;');
         $query->execute(array($id));
         $userData = $query->fetch(PDO::FETCH_OBJ);
         return $userData;
@@ -40,12 +40,12 @@ class UserModel
     }
     function delete($userId)
     {
-        $query = $this->db->prepare("DELETE FROM user WHERE email = ?");
+        $query = $this->db->prepare("DELETE FROM user WHERE id = ?");
         $query->execute(array($userId));
     }
     function update($userId, $userData)
     {
-        $query = $this->db->prepare("UPDATE user SET permission = ? WHERE user.email = ?;");
+        $query = $this->db->prepare("UPDATE user SET permission = ? WHERE user.id = ?;");
         $query->execute(array($userData['permission'], $userId));
     }
 }

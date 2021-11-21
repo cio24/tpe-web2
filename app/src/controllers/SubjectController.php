@@ -24,9 +24,10 @@ class SubjectController
         $this->view->showSubjectsSearcher();
     }
 
-    public function search($params = null){
+    public function search($params = null)
+    {
         $criteria = $_POST;
-        if(empty($criteria['s_name']) && empty($criteria['c_name']) && empty($criteria['s_year']) && empty($criteria['s_semester']))
+        if (empty($criteria['s_name']) && empty($criteria['c_name']) && empty($criteria['s_year']) && empty($criteria['s_semester']))
             return $this->index(null, 'Yoy have to add a search criteria.');
 
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
@@ -42,7 +43,7 @@ class SubjectController
         $maxPageNumber = ceil($this->model->getSubjectsCount() / $limit);
 
         $pageNumber = $params[':PAGE_NUMBER'];
-        if(empty($pageNumber))
+        if (empty($pageNumber))
             $pageNumber = 1;
         elseif ($pageNumber > $maxPageNumber)
             $pageNumber = $maxPageNumber;
@@ -51,7 +52,7 @@ class SubjectController
         $subjectsData = $this->model->getAll($offset, $limit);
 
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), $mesagge, $pageNumber, $maxPageNumber);
+        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkAdmin(), $mesagge, $pageNumber, $maxPageNumber);
     }
 
     public function show($params)
@@ -70,8 +71,8 @@ class SubjectController
             if (empty($subject))
                 return $this->index(null, "The subject does not exist.");
 
-            $subjects = $this->model->getAll(1,self::MAX_SUBJECTS_PER_PAGE);
-            $careers = $this->modelCareer->getAll(1,self::MAX_SUBJECTS_PER_PAGE);
+            $subjects = $this->model->getAll(1, self::MAX_SUBJECTS_PER_PAGE);
+            $careers = $this->modelCareer->getAll(1, self::MAX_SUBJECTS_PER_PAGE);
 
             $this->view->showEdit($subject, $subjects, $careers);
         } else

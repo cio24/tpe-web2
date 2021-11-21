@@ -22,15 +22,14 @@ class SubjectView
         $this->smarty->display('templates/subjectsSearchResultPage.tpl');
     }
 
-    function showAll($subjectData, $careersData, $logged, $errorMessage, $pageNumber, $maxPageNumber)
+    function showAll($subjectData, $careersData, $admin, $errorMessage, $pageNumber, $maxPageNumber)
     {
-        $this->smarty->assign('admin', AuthHelper::checkAdmin());
+        $this->smarty->assign('admin', $admin);
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
         $this->smarty->assign('action', $action);
         $this->smarty->assign('subjectsData', $subjectData);
         $this->smarty->assign('careersData', $careersData);
         $this->smarty->assign('errorMessage', $errorMessage);
-        $this->smarty->assign('logged', $logged);
         $this->smarty->assign('addOrUpdate', 'add');
         $this->smarty->assign('pageNumber', $pageNumber);
         $this->smarty->assign('maxPageNumber', $maxPageNumber);
