@@ -32,7 +32,7 @@
     <tbody>
       {foreach $subjectsDataOfCareer as $subjectData}
         <tr>
-          <td>{$subjectData->name}</td>
+          <td><a href="/subjects/{$subjectData->id}">{$subjectData->name}</a></td>
           <td>{$subjectData->year}</td>
           <td>{$subjectData->semester}</td>
           <td>{$subjectData->direct_requirement}</td>

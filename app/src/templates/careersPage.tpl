@@ -5,7 +5,7 @@
  {if $errorMessage neq ""} 
   <p class="alert alert-danger" role="alert">{$errorMessage}</p>
 {/if}
-  {if $isLoggedIn}
+  {if $admin}
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
       Create career
     </button>
@@ -35,7 +35,7 @@
         <th>Career</th>
         <th>Faculty</th>
         <th>Amount of years</th>
-        {if $isLoggedIn}
+        {if $admin}
           <th>Edit</th>
           <th>Delete</th>
         {/if}
@@ -48,7 +48,7 @@
             <td><a href="/careers/{$career->id}">{$career->name}</a></td>
             <td>{$career->faculty}</td>
             <td>{$career->years}</td>
-            {if $isLoggedIn}
+            {if $admin}
               <td><a class="btn bi bi-pencil-square" href="/careers/{$career->id}/edit"></a></td>
               <td><a class="btn bi bi-trash" href="/careers/{$career->id}/delete"></a></td>
             {/if}

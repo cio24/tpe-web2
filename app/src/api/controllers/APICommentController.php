@@ -2,6 +2,7 @@
 
 require_once '/var/www/app/src/api/controllers/APIController.php';
 require_once '/var/www/app/src/api/models/APICommentModel.php';
+require_once '/var/www/app/src/helpers/AuthHelper.php';
 
 class APICommentController extends APIController
 {

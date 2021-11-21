@@ -23,10 +23,10 @@
             {/if}
         </ul>
         <form class="d-flex">
-            {if $action}
-                <a class="nav-link" aria-current="page" href="sign{$action}"> Sign {$action} </a>
-                {if $action=='signin'}
-            {/if}
+            {if $loggedIn}
+                <a class="nav-link" aria-current="page" href="signout"> Sign out </a>
+            {else}
+                <a class="nav-link" aria-current="page" href="signin"> Sign in </a>
                 <a class="nav-link" aria-current="page" href="signup"> Sign up </a>
             {/if}
         </form>
