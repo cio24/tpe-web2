@@ -9,7 +9,6 @@ $apiRouter->addRoute("comments", "GET", "APICommentController", "get");
 $apiRouter->addRoute("comments", "POST", "APICommentController", "post");
 $apiRouter->addRoute("comments/:ID", "DELETE", "APICommentController", "delete");
 
-
 function removeSuffix($path) {
     $path = explode("/", $path);
     array_shift($path);
@@ -17,6 +16,5 @@ function removeSuffix($path) {
     return implode("/", $path);
 }
 
-
-$apiRouter->route(removeSuffix($_GET['resource']), $_SERVER['REQUEST_METHOD']);
+$apiRouter->route(removeSuffix($_SERVER['REQUEST_URI']), $_SERVER['REQUEST_METHOD']);
 

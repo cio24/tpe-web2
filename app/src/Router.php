@@ -14,25 +14,40 @@ class Route
         $this->verb = $verb;
         $this->controller = $controller;
         $this->method = $method;
-        $this->params = [];
+        $this->params = [ 'pathParams' => [] , 'queryParams' => [] ];
     }
     public function match($url, $verb)
     {
-        if ($this->verb != $verb) {
+        if ($this->verb != $verb)
             return false;
-        }
+        // $url = users/:ID_USER/comments?sort_by=date&order_by=asc
+
         $partsURL = explode("/", trim($url, '/'));
-        $partsRoute = explode("/", trim($this->url, '/'));
-        if (count($partsRoute) != count($partsURL)) {
-            return false;
+
+        $lastPart = end($partsURL);
+        // remote query params from partsURL
+        $partsURL[count($partsURL) - 1] = explode("?", $lastPart)[0];
+        $queryParams = explode("&", explode("?", $lastPart)[1]);
+        
+        // transform query params to associative array
+        $associativeQueryParams = [];
+        foreach ($queryParams as $param) {
+            $param = explode("=", $param);
+            $associativeQueryParams[$param[0]] = $param[1];
         }
+        $this->params['queryParams'] = $associativeQueryParams;
+
+        $partsRoute = explode("/", trim($this->url, '/'));
+        if (count($partsRoute) != count($partsURL)) 
+            return false;
+        
         foreach ($partsRoute as $key => $part) {
             if ($part[0] != ":") {
                 if ($part != $partsURL[$key])
                     return false;
             } //es un parametro
             else
-                $this->params[$part] = $partsURL[$key];
+                $this->params['pathParams'][$part] = $partsURL[$key];
         }
         return true;
     }
@@ -45,7 +60,6 @@ class Route
         (new $controller())->$method($params);
     }
 }
-
 class Router
 {
     private $routeTable = [];

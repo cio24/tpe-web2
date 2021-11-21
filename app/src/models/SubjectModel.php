@@ -22,7 +22,6 @@ class SubjectModel
 
         // remove the last AND
         $partialQuery = substr($partialQuery, 0, -3);
-        print_r($partialQuery);
 
         $query = $this->db->prepare($partialQuery);
         foreach ($criteria as $key => $value)
