@@ -57,7 +57,8 @@ class SubjectController
 
     public function show($params)
     {
-        $userId = 1;
+        session_start();
+        $userId = $_SESSION["USER_ID"];
         $subjectData = $this->model->get($params[':ID']);
         $this->view->showSubject($subjectData, $userId, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }

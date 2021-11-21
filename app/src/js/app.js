@@ -3,24 +3,20 @@ const app = Vue.createApp({
     data() {
         return {
             comments: [],
-            comment: "holis",
-            difficulty: 3
+            comment: "",
+            difficulty: 0
         }
     },
     computed: {
-        subjectId: () => document.querySelector('#app').dataset.id,
-        userId: () => document.querySelector('#app').dataset.userid
+        userId: () => document.querySelector('#app').dataset.user_id,
+        subjectId: () => document.querySelector('#app').dataset.id
     },
-    async beforeCreate() {
+    async created() {
         try {
-            // this.user_id = document.querySelector('#app').dataset.userid
-            this.subjectId = document.querySelector('#app').dataset.id
             let subjectId = this.subjectId
-            console.log(this.subjectId);
             let res = await fetch("http://tpeweb2careerspath.loc/api/comments")
             let apiData = await res.json()
             this.comments = apiData.filter((x) => x.subject_id == subjectId)
-            console.log("asdas")
         } catch (error) {
             console.log(error)
         }
@@ -28,7 +24,6 @@ const app = Vue.createApp({
 
     methods: {
         async deleteComment(id) {
-            console.log(id)
             var requestOptions = {
                 method: 'DELETE',
                 redirect: 'follow'
@@ -45,11 +40,9 @@ const app = Vue.createApp({
         async getComments() {
             try {
                 let subjectId = this.subjectId
-                console.log(this.subjectId);
                 let res = await fetch("http://tpeweb2careerspath.loc/api/comments")
                 let apiData = await res.json()
                 this.comments = apiData.filter((x) => x.subject_id == subjectId)
-                console.log("asdas")
             } catch (error) {
                 console.log(error)
             }
@@ -64,7 +57,6 @@ const app = Vue.createApp({
                 "comment": this.comment,
                 "difficulty": this.difficulty
             })
-            console.log(raw);
             const requestOptions = {
                 method: 'POST',
                 headers: myHeaders,
