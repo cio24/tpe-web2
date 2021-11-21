@@ -14,10 +14,9 @@ class HomeView
     function showHome($errorMessage = '')
     {
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-
-        $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->assign('action', $action);
+        $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->assign('admin', AuthHelper::checkAdmin());
-        $this->smarty->display('templates/home.tpl');
+        $this->smarty->display('templates/homePage.tpl');
     }
 }

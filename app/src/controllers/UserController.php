@@ -19,7 +19,7 @@ class UserController
     }
     function index()
     {
-        $this->view->showLogup();
+        $this->view->showSignUp();
     }
     function show()
     {
@@ -41,7 +41,7 @@ class UserController
             AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "home");
         } else
-            $this->view->showLogup('User already exists');
+            $this->view->showSignUp('User already exists');
     }
     function delete($params)
     {

@@ -1,14 +1,11 @@
-{include file="head-html.tpl"}
-<body>
-  {include file="header.tpl"}
-  <h1 class="text-center">Carrera</h1>
+  <h1 class="text-center">Career</h1>
 
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Facultad</th>
-        <th>Cantidad de años</th>
+        <th>Name</th>
+        <th>Faculty</th>
+        <th>Amount of years</th>
       </tr>
     </thead>
     <tbody>
@@ -21,15 +18,15 @@
   </table>
 
 
-  <h1 class="text-center">Materias</h1>
+  <h1 class="text-center">Subjects</h1>
 
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Materia</th>
-        <th>Año</th>
-        <th>Cuatrimestre</th>
-        <th>Correlativa</th>
+        <th>Subject</th>
+        <th>Year</th>
+        <th>Semester</th>
+        <th>Requirement</th>
       </tr>
     </thead>
     <tbody>
@@ -43,5 +40,3 @@
       {/foreach}
     </tbody>
   </table>
-  {include file="footer.tpl"}
-</body>
