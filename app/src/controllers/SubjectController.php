@@ -21,7 +21,7 @@ class SubjectController
 
     public function showSearcher($params = null, $message = '')
     {
-        $this->view->showSubjectsSearcher();
+        $this->view->showSubjectsSearcher(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
     public function search($params = null)
@@ -33,7 +33,7 @@ class SubjectController
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
         $subjects = $this->model->search($criteria);
         $careersData = $this->modelCareer->getAll();
-        $this->view->showSearchResult($subjects, $action, $careersData);
+        $this->view->showSearchResult($subjects, $careersData, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
     public function index($params = null, $mesagge = '')
@@ -52,7 +52,7 @@ class SubjectController
         $subjectsData = $this->model->getAll($offset, $limit);
 
         $careersData = $this->modelCareer->getAll();
-        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkAdmin(), $mesagge, $pageNumber, $maxPageNumber);
+        $this->view->showAll($subjectsData, $careersData, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), $mesagge, $pageNumber, $maxPageNumber);
     }
 
     public function show($params)
@@ -75,7 +75,7 @@ class SubjectController
             $subjects = $this->model->getAll(1, self::MAX_SUBJECTS_PER_PAGE);
             $careers = $this->modelCareer->getAll(1, self::MAX_SUBJECTS_PER_PAGE);
 
-            $this->view->showEdit($subject, $subjects, $careers);
+            $this->view->showEdit($subject, $subjects, $careers, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
             $this->index("You are not an administrator.");
     }

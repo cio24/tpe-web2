@@ -11,12 +11,11 @@ class HomeView
         $this->smarty = new Smarty();
     }
 
-    function showHome($errorMessage = '')
+    function showHome($loggedIn, $admin, $errorMessage = '')
     {
-        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-        $this->smarty->assign('action', $action);
         $this->smarty->assign('errorMessage', $errorMessage);
-        $this->smarty->assign('admin', AuthHelper::checkAdmin());
+        $this->smarty->assign('loggedIn', $loggedIn);
+        $this->smarty->assign('admin', $admin);
         $this->smarty->display('templates/homePage.tpl');
     }
 }

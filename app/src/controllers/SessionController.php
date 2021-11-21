@@ -18,7 +18,7 @@ class SessionController
 
     function index()
     {
-        $this->loginView->showLogin('');
+        $this->loginView->showLogin(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
     function logout()
@@ -38,6 +38,6 @@ class SessionController
             AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "home");
         } else
-            $this->loginView->showLogin("This user is not registered or the information is wrong");
+            $this->loginView->showLogin(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "This user is not registered or the information is wrong");
     }
 }

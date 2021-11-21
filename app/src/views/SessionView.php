@@ -2,20 +2,21 @@
 
 require_once './../vendor/autoload.php';
 
-class SessionView {
+class SessionView
+{
 
     private $smarty;
 
-   function __construct() {
-       $this->smarty = new Smarty();
-   } 
-
-   function showLogin($errorMessage){
-        $this->smarty->assign('admin', AuthHelper::checkAdmin());
-        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-        $this->smarty->assign('action', $action);
-        $this->smarty->assign('errorMessage', $errorMessage);
-        $this->smarty->display('templates/signInPage.tpl'); 
+    function __construct()
+    {
+        $this->smarty = new Smarty();
     }
 
+    function showLogin($loggedIn, $admin, $errorMessage = '')
+    {
+        $this->smarty->assign('loggedIn', $loggedIn);
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('errorMessage', $errorMessage);
+        $this->smarty->display('templates/signInPage.tpl');
+    }
 }

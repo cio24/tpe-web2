@@ -10,27 +10,24 @@ class UserView
     {
         $this->smarty = new Smarty();
     }
-    function showSignUp($errorMessage = '')
+    function showSignUp($loggedIn, $admin, $errorMessage = '')
     {
-        $this->smarty->assign('admin', AuthHelper::checkAdmin());
-        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-        $this->smarty->assign('action', $action);
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('loggedIn', $loggedIn);
         $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->display('templates/signUpPage.tpl');
     }
-    function showUsers($users)
+    function showUsers($users, $loggedIn, $admin)
     {
-        $this->smarty->assign('admin', AuthHelper::checkAdmin());
-        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-        $this->smarty->assign('action', $action);
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('loggedIn', $loggedIn);
         $this->smarty->assign('users', $users);
         $this->smarty->display('templates/usersPage.tpl');
     }
-    function showEdit($user)
+    function showEdit($user, $loggedIn, $admin)
     {
-        $this->smarty->assign('admin', AuthHelper::checkAdmin());
-        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-        $this->smarty->assign('action', $action);
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('loggedIn', $loggedIn);
         $this->smarty->assign('user', $user);
         $this->smarty->display('templates/userEditPage.tpl');
     }
