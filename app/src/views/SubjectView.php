@@ -12,21 +12,21 @@ class SubjectView
         $this->smarty = new Smarty();
     }
 
-    function showSearchResult($subjectData, $action, $careerData)
+    function showSearchResult($subjectData, $careerData, $loggedIn, $admin, $errorMessage = '')
     {
+        $this->smarty->assign('loggedIn', $loggedIn);
+        $this->smarty->assign('admin', $admin);
         $this->smarty->assign('subjectData', $subjectData);
-        $this->smarty->assign('action', $action);
         $this->smarty->assign('careerData', $careerData);
         $this->smarty->assign('subjectsData', $subjectData);
-        $this->smarty->assign('errorMessage', '');
+        $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->display('templates/subjectsSearchResultPage.tpl');
     }
 
-    function showAll($subjectData, $careersData, $admin, $errorMessage, $pageNumber, $maxPageNumber)
+    function showAll($subjectData, $careersData, $loggedIn, $admin, $errorMessage, $pageNumber, $maxPageNumber)
     {
         $this->smarty->assign('admin', $admin);
-        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-        $this->smarty->assign('action', $action);
+        $this->smarty->assign('loggedIn', $loggedIn);
         $this->smarty->assign('subjectsData', $subjectData);
         $this->smarty->assign('careersData', $careersData);
         $this->smarty->assign('errorMessage', $errorMessage);
@@ -45,11 +45,10 @@ class SubjectView
         $this->smarty->display('templates/SubjectPage.tpl');
     }
 
-    function showEdit($subject, $subjects, $careers)
+    function showEdit($subject, $subjects, $careers, $loggedIn, $admin)
     {
-        $this->smarty->assign('admin', AuthHelper::checkAdmin());
-        $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
-        $this->smarty->assign('action', $action);
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('loggedIn', $loggedIn);
         $this->smarty->assign('subjects', $subjects);
         $this->smarty->assign('careersData', $careers);
         $this->smarty->assign('subject', $subject);
@@ -57,8 +56,10 @@ class SubjectView
         $this->smarty->display('templates/subjectEditPage.tpl');
     }
 
-    public function showSubjectsSearcher()
+    public function showSubjectsSearcher($loggedIn, $admin)
     {
+        $this->smarty->assign('loggedIn', $loggedIn);
+        $this->smarty->assign('admin', $admin);
         $this->smarty->display('templates/subjectsSearcherPage.tpl');
     }
 }

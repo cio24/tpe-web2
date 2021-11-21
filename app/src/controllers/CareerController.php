@@ -19,7 +19,7 @@ class CareerController
     function index($params)
     {
         $careersData = $this->model->getAll();
-        $this->view->showAll($careersData, AuthHelper::checkAdmin(), '');
+        $this->view->showAll($careersData, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
     function show($params)
@@ -27,7 +27,7 @@ class CareerController
         $careerId = $params[':ID'];
         $careerData = $this->model->get($careerId);
         $subjectsDataOfCareer = $this->subjectModel->getFilteredByCareer($careerId);
-        $this->view->showOne($careerData, $subjectsDataOfCareer);
+        $this->view->showOne($careerData, $subjectsDataOfCareer, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
     function add()
     {
@@ -54,7 +54,7 @@ class CareerController
         if (AuthHelper::checkAdmin()) {
             $careerId = $params[':ID'];
             $career = $this->model->get($careerId);
-            $this->view->showEdit($career);
+            $this->view->showEdit($career, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
             $this->index("You are not an administrator.");
     }
@@ -66,7 +66,7 @@ class CareerController
             header("Location:" . BASE_URL . "careers");
             $this->model->update($careerId, $career);
             $careers = $this->model->getAll();
-            $this->view->showAll($careers, AuthHelper::checkLoggedIn());
+            $this->view->showAll($careers, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
             $this->index("You are not an administrator.");
     }

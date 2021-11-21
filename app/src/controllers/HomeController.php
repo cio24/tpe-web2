@@ -12,6 +12,6 @@ class HomeController
 
     function index()
     {
-        $this->view->showHome();
+        $this->view->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 }
