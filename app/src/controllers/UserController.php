@@ -55,7 +55,7 @@ class UserController
             AuthHelper::saveSession($userData);
             header("Location: " . BASE_URL . "");
         } else
-            $this->loginView->showLogin(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "This user is not registered or the information is wrong");
+            $this->view->showSignIn(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "This user is not registered or the information is wrong");
     }
 
     function add()
