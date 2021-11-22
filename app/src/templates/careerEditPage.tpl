@@ -15,7 +15,7 @@
             <label for="faculty">Faculty</label>
             <input type="text" class="form-control" name="faculty" id="faculty" value="{$career->faculty}">
         </div>
-        <button class="btn" type="submit">Create</button>
+        <button class="btn" type="submit">Edit</button>
     </form>
     {include file="footer.tpl"}
 </body>

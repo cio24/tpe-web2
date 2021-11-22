@@ -15,7 +15,7 @@ class AuthHelper
         $_SESSION['USER_PERMISSION'] = $user->permission;
     }
     static public function checkAdmin()
-    {
+    {        
         session_start();
         return $_SESSION['USER_PERMISSION'] == 1;
     }

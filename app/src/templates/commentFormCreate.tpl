@@ -1,6 +1,3 @@
-<section id="app" class="container" data-id={$subjectData->id} data-user_id={$userId}>
-  <br>
-  {if $loggedIn}
     <h3>Add comment</h3>
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Comment</span>
@@ -17,8 +14,3 @@
           <button class="btn btn-success">Send</button>
         </form>   
     </div>
-  {/if}
-  <h2 class="text-center">Comments</h2>
-  {include file="comments.tpl"}
-</section>
-<script src="../js/app.js"></script>

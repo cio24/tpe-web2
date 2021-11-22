@@ -36,9 +36,9 @@ class CareerController
         if (AuthHelper::checkAdmin()) {
             $career = $_POST;
             $this->model->add($career);
-            $this->index('');
+            $this->index(null,'');
         } else
-            $this->index("You are not an administrator.");
+            $this->index(null,"You are not an administrator.");
     }
     function delete($params)
     {
@@ -47,9 +47,9 @@ class CareerController
             if ($this->model->delete($careerId))
                 header("Location:" . BASE_URL . "careers");
             else
-                $this->index("This career cannot be delete 'cause it has subjects loaded");
+                $this->index(null,"This career cannot be delete 'cause it has subjects loaded");
         } else
-            $this->index("You are not an administrator.");
+            $this->index(null,"You are not an administrator.");
     }
     function edit($params)
     {
@@ -58,7 +58,7 @@ class CareerController
             $career = $this->model->get($careerId);
             $this->view->showEdit($career, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
-            $this->index("You are not an administrator.");
+            $this->index(null,"You are not an administrator.");
     }
     function update($params)
     {
@@ -70,6 +70,6 @@ class CareerController
             $careers = $this->model->getAll();
             $this->view->showAll($careers, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
-            $this->index("You are not an administrator.");
+            $this->index(null,"You are not an administrator.");
     }
 }

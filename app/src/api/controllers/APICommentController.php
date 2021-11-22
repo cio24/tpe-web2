@@ -26,20 +26,20 @@ class APICommentController extends APIController
 
     public function get($params = null)
     {
-        
+
         $queryParams = $params['queryParams'];
 
         if (!$this->areParamsValid($queryParams))
             return $this->view->response("Invalid parameters.", 400);
 
         if (isset($queryParams['sortBy']) && isset($queryParams['orderBy']) && isset($queryParams['filterByDifficulty']))
-            $comments = $this->model->getFilteredAndSorted($queryParams['sortBy'], $queryParams['orderBy'], $queryParams['filterByDifficulty']);
+            $comments = $this->model->getFilteredAndSorted($queryParams['sortBy'], $queryParams['orderBy'], $queryParams['filterByDifficulty'], $queryParams['subject_id']);
         elseif (isset($queryParams['sortBy']) && isset($queryParams['orderBy']))
-            $comments = $this->model->getSorted($queryParams['sortBy'], $queryParams['orderBy']);
+            $comments = $this->model->getSorted($queryParams['sortBy'], $queryParams['orderBy'], $queryParams['subject_id']);
         elseif (isset($queryParams['filterByDifficulty']))
-            $comments = $this->model->getFiltered($queryParams['filterByDifficulty']);
+            $comments = $this->model->getFiltered($queryParams['filterByDifficulty'], $queryParams['subject_id']);
         else
-            $comments = $this->model->getAll();
+            $comments = $this->model->getFilteredBySubject($queryParams['subject_id']);
 
         if (!empty($comments))
             $this->view->response($comments, 200);
@@ -55,6 +55,8 @@ class APICommentController extends APIController
         if (isset($queryParams['orderBy']) && !in_array($queryParams['orderBy'], ['asc', 'desc']))
             return false;
         if (isset($queryParams['filterByDifficulty']) && !in_array($queryParams['filterByDifficulty'], [1, 2, 3, 4, 5]))
+            return false;
+        if (empty($queryParams['subject_id']) || (!is_numeric($queryParams['subject_id']) && !is_int($queryParams['subject_Id']) && $queryParams['subject_id'] < 0))
             return false;
         return true;
     }

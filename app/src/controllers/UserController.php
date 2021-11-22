@@ -21,14 +21,17 @@ class UserController
     {
         $this->view->showSignUp(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
+
     function show()
     {
         if (AuthHelper::checkAdmin()) {
-            $users = $this->model->getAll();
+            $userId = $_SESSION["USER_ID"];
+            $users = $this->model->getAllWithout($userId);
             $this->view->showUsers($users, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
             $this->homeView->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "You are not an administrator.");
     }
+
     function add()
     {
         $user = $_POST;
@@ -43,21 +46,31 @@ class UserController
         } else
             $this->view->showSignUp(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), 'User already exists');
     }
+
     function delete($params)
-    {
-        if (AuthHelper::checkAdmin()) {
-            $this->model->delete($params['pathParams'][':ID']);
-            header("Location: " . BASE_URL . "users");
-        } else
-            $this->homeView->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "You are not an administrator.");
+    { 
+        if (!AuthHelper::checkAdmin())
+            return $this->homeView->showNotFoundPage();
+
+        $user = $this->model->get($params['pathParams'][':ID']);
+        if (empty($user) || $user->id == $_SESSION['USER_ID'])
+            return $this->homeView->showNotFoundPage();
+        $this->model->delete($params['pathParams'][':ID']);
+        header("Location: " . BASE_URL . "users");
+
     }
+
     function edit($params)
     {
-        if (AuthHelper::checkAdmin()) {
-            $user = $this->model->get($params['pathParams'][':ID']);
-            $this->view->showEdit($user, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
-        } else
-            $this->homeView->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "You are not an administrator.");
+        if(!AuthHelper::checkAdmin())
+            return $this->homeView->showNotFoundPage();
+
+        $user = $this->model->get($params['pathParams'][':ID']);
+        if(empty($user) || $user->id == $_SESSION['USER_ID'])
+            return $this->homeView->showNotFoundPage();
+        
+        $this->view->showEdit($user, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
+
     }
     function update($params)
     {

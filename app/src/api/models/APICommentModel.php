@@ -9,65 +9,41 @@ class APICommentModel
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    public function getFilteredAndSorted($sortBy, $orderBy, $difficulty, $subjectId)
+    {
+        $query = $this->db->prepare("SELECT * FROM comment WHERE difficulty = :difficulty  AND subject_id = :subjectId ORDER BY $sortBy $orderBy");
+        $query->bindParam(':difficulty', $difficulty);
+        $query->bindParam(':subjectId', $subjectId);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
+
     function getFilteredBySubject($subjectId)
     {
-        $query = $this->db->prepare('SELECT * FROM comment where id_subject = ?;');
+        $query = $this->db->prepare('SELECT * FROM comment where subject_id = ?;');
         $query->execute([$subjectId]);
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getFilteredAndSorted($sortBy, $orderBy, $difficulty)
-    {
 
-        $query = $this->db->prepare("SELECT * FROM comment WHERE difficulty = :difficulty ORDER BY $sortBy $orderBy");
-        $query->bindParam(':difficulty', $difficulty);
+    public function getSorted($sortBy, $orderBy, $subjectId)
+    {
+        $query = $this->db->prepare("SELECT * FROM comment WHERE subject_id = :subjectId ORDER BY $sortBy $orderBy");
+        $query->bindParam(':subjectId', $subjectId);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getSorted($sortBy, $orderBy)
+    public function getFiltered($filterByDifficulty, $subjectId)
     {
-        $query = $this->db->prepare("SELECT * FROM comment ORDER BY $sortBy $orderBy");
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    public function getFiltered($filterByDifficulty)
-    {
-        $query = $this->db->prepare('SELECT * FROM comment WHERE difficulty = :filterByDifficulty');
+        $query = $this->db->prepare('SELECT * FROM comment WHERE difficulty = :filterByDifficulty AND subject_id = :subjectId');
         $query->bindParam(':filterByDifficulty', $filterByDifficulty);
+        $query->bindParam(':subjectId', $subjectId);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
-    function getFilteredByUser($userId)
-    {
-        $query = $this->db->prepare('SELECT * FROM comment where id_user = ?;');
-        $query->execute([$userId]);
-        return $query->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    function getAll()
-    {
-
-        $query = $this->db->prepare('SELECT * FROM comment;');
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    function get($id)
-    {
-        $query = $this->db->prepare('SELECT * FROM comment where id = ?;');
-        $query->execute([$id]);
-        return $query->fetch(PDO::FETCH_OBJ);
-    }
-
-    function getByUserAndSubject($subjectId,$userId)
-    {
-        $query = $this->db->prepare('SELECT * FROM comment where user_id = ? and subject_id = ?;');
-        $query->execute([$userId, $subjectId]);
-        return $query->fetch(PDO::FETCH_OBJ);
-    }
 
     function create($data)
     {
@@ -82,12 +58,12 @@ class APICommentModel
 
     function delete($id)
     {
-       try {
+        try {
             $query = $this->db->prepare('DELETE FROM comment WHERE id = ?;');
             $query->execute([$id]);
         } catch (PDOException $e) {
             return false;
         }
         return true;
-    }  
+    }
 }

@@ -1,4 +1,8 @@
-<form class="container" action="/subjects/{$subject->id}/{$addOrUpdate}" method="post" enctype="multipart/form-data">
+{if $addOrUpdate eq "add"}
+    <form class="container" action="/subjects/{$addOrUpdate}" method="post" enctype="multipart/form-data">
+{else}
+    <form class="container" action="/subjects/{$subject->id}/{$addOrUpdate}" method="post" enctype="multipart/form-data">
+{/if}
     <div class="mb-3">
         <label for="name">Name</label>
         <input type="text" class="form-control" name="name" value="{$subject->name}">

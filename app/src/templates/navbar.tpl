@@ -13,9 +13,11 @@
                 <a class="nav-link active" aria-current="page" href="subjects/page/1">Subjects</a>
             </li>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="subjects/searcher">Search</a>
-            </li>
+            {if $loggedIn}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="subjects/searcher">Search</a>
+                </li>
+            {/if}
             {if $admin}
                 <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="users">Users</a>

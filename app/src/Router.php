@@ -18,18 +18,16 @@ class Route
     }
     public function match($url, $verb)
     {
+
         if ($this->verb != $verb)
             return false;
-        // $url = users/:ID_USER/comments?sort_by=date&order_by=asc
 
         $partsURL = explode("/", trim($url, '/'));
 
         $lastPart = end($partsURL);
-        // remote query params from partsURL
         $partsURL[count($partsURL) - 1] = explode("?", $lastPart)[0];
         $queryParams = explode("&", explode("?", $lastPart)[1]);
         
-        // transform query params to associative array
         $associativeQueryParams = [];
         foreach ($queryParams as $param) {
             $param = explode("=", $param);

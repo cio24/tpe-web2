@@ -2,10 +2,13 @@ const app = Vue.createApp({
 
     data() {
         return {
-            comments: [],
-            comment: "",
-            difficulty: 1
-        }
+          comments: [],
+          comment: "",
+          difficulty: 1,
+          sortBy: "date",
+          order: "asc",
+          difficultyFilterValue: null,
+        };
     },
     computed: {
         userId: () => Number(document.querySelector('#app').dataset.user_id),
@@ -13,10 +16,9 @@ const app = Vue.createApp({
     },
     async created() {
         try {
-            let subjectId = this.subjectId
-            let res = await fetch("http://tpeweb2careerspath.loc/api/comments")
+            let res = await fetch("http://tpeweb2careerspath.loc/api/comments?subject_id=" + this.subjectId);
             let apiData = await res.json()
-            this.comments = apiData.filter((x) => x.subject_id == subjectId)
+            this.comments = apiData
         } catch (error) {
             console.log(error)
         }
@@ -39,10 +41,9 @@ const app = Vue.createApp({
         },
         async getComments() {
             try {
-                let subjectId = this.subjectId
-                let res = await fetch("http://tpeweb2careerspath.loc/api/comments")
+                let res = await fetch("http://tpeweb2careerspath.loc/api/comments?subject_id=" + this.subjectId)
                 let apiData = await res.json()
-                this.comments = apiData.filter((x) => x.subject_id == subjectId)
+                this.comments = apiData
             } catch (error) {
                 console.log(error)
             }
@@ -72,6 +73,22 @@ const app = Vue.createApp({
             } catch (error) {
                 console.log(error)
             }
+        },
+        async filterOrUpdate(){
+            const sortBy = this.sortBy == "date" ? "id" : this.sortBy
+            let url = `http://tpeweb2careerspath.loc/api/comments?sortBy=${sortBy}&orderBy=${this.order}&subject_id=${this.subjectId}`
+            if(this.difficultyFilterValue != null)
+                url += `&filterByDifficulty=${this.difficultyFilterValue}`
+
+            try {
+                let response = await fetch(url)
+                let result = await response.json()
+                this.comments = result
+            }
+            catch (error) {
+                console.log(error)
+            }
+
         }
     }
 });

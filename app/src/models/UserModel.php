@@ -17,12 +17,12 @@ class UserModel
         return $userData;
     }
 
-    function getAll()
+    function getAllWithout($userId)
     {
-        $query = $this->db->prepare('SELECT * FROM user;');
-        $query->execute();
-        $users = $query->fetchAll(PDO::FETCH_OBJ);
-        return $users;
+        $query = $this->db->prepare('SELECT * FROM user WHERE id != ?;');
+        $query->execute([($userId)]);
+        $usersData = $query->fetchAll(PDO::FETCH_OBJ);
+        return $usersData;
     }
 
     function getByEmail($email)

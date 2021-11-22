@@ -23,11 +23,16 @@ class SubjectController
 
     public function showSearcher($params = null, $message = '')
     {
+        if (!AuthHelper::checkLoggedIn())
+            return $this->view->showNotFoundPage();
         $this->view->showSubjectsSearcher(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
     public function search($params = null)
     {
+        if(!AuthHelper::checkLoggedIn())
+            return $this->view->showNotFoundPage();
+
         $criteria = $_POST;
         if (empty($criteria['s_name']) && empty($criteria['c_name']) && empty($criteria['s_year']) && empty($criteria['s_semester']))
             return $this->index(null, 'Yoy have to add a search criteria.');
@@ -44,7 +49,8 @@ class SubjectController
 
         $maxPageNumber = ceil($this->model->getSubjectsCount() / $limit);
 
-        $pageNumber = $params['pathParams'][':PAGE_NUMBER'];
+        $pageNumber = isset($params['pathParams'][':PAGE_NUMBER']) ? $params['pathParams'][':PAGE_NUMBER'] : 1;
+
         
         if ($pageNumber > $maxPageNumber || $pageNumber < 1)
             return $this->view->showNotFoundPage();
@@ -81,13 +87,13 @@ class SubjectController
 
             $this->view->showEdit($subject, $subjects, $careers, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
-            $this->index("You are not an administrator.");
+            $this->index(null,"You are not an administrator.");
     }
 
     public function add($params = null)
     {
         if (!AuthHelper::checkAdmin())
-            return $this->index("You are not an administrator.");
+            return $this->index(null,"You are not an administrator.");
 
         // is an admin so we check if there are all required data
 
@@ -101,7 +107,7 @@ class SubjectController
             $subjectData['direct_requirement'] = null;
 
         // if the image is not empty
-        if (isset($_FILES['input_image'])) {
+        if ((!empty($_FILES['input_image']['name']))) {
             if (!$this->isImageTypeValid($_FILES['input_image']['type']))
                 return $this->index(null, "The image type is not valid.");
 
@@ -122,15 +128,16 @@ class SubjectController
             $subjectData = $this->model->get($subjectId);
 
             if (empty($subjectData))
-                return $this->index("The subject does not exist.");
+                return $this->index(null,"The subject does not exist.");
 
-            if (!empty($subjectData->image_path))
-                if ($this->model->deleteImage($subjectData->image_path))
-
-                    if ($this->model->delete($subjectId))
-                        header("Location:" . BASE_URL . "subjects");
-                    else
-                        $this->index("This subjects cannot be delete 'cause is a requirement of another subject.");
+            if (!empty($subjectData->image_path)){                    
+                if (!$this->model->deleteImage($subjectData->image_path))
+                    return $this->index(null,"The image of the subject could not be deleted.");
+            }
+            if ($this->model->delete($subjectId))
+                $this->index(null,"The subject has been deleted.");
+            else
+                $this->index(null, "This subjects cannot be delete 'cause is a requirement of another subject.");
         } else
             $this->index(null, "You are not an administrator.");
     }
@@ -144,20 +151,22 @@ class SubjectController
 
             if ($subjectData['direct_requirement'] == "null")
                 $subjectData['direct_requirement'] = null;
-            if (isset($_FILES['input_image'])) {
+            if (!empty($_FILES['input_image']['name'])) {
                 if (!$this->isImageTypeValid($_FILES['input_image']['type']))
                     return $this->index(null, "The image type is not valid.");
 
                 $tempImageFile = $_FILES['input_image']['tmp_name'];
                 $tempImageName = $_FILES['input_image']['name'];
-                $this->model->deleteImage($this->model->get($subjectId)->image_path);
+                $oldImagePath = $this->model->get($subjectId)->image_path;
+                if(!empty($oldImagePath))
+                    $this->model->deleteImage($oldImagePath);
                 $this->model->update($subjectId, $subjectData, $tempImageFile, $this->getNewUniqueImagePath($tempImageName));
             } else
                 $this->model->update($subjectId, $subjectData);
 
             $this->index(null, "Subject updated");
         } else
-            $this->index("You are not an administrator.");
+            $this->index(null,"You are not an administrator.");
     }
 
     private function getNewUniqueImagePath($imageName)
@@ -190,7 +199,7 @@ class SubjectController
             $errorsStrings = '';
             foreach ($errors as $error)
                 $errorsStrings .= $error . '<br>';
-            return $this->index($errorsStrings);
+            return $this->index(null,$errorsStrings);
         }
     }
 }

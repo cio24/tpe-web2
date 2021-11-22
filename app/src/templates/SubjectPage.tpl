@@ -2,6 +2,6 @@
 <body>
   {include file="navbar.tpl"}
   {include file="subject.tpl"}
-  {include file="subjectComments.tpl"}
+  {include file="commentsSection.tpl"}
   {include file="footer.tpl"}
 </body
