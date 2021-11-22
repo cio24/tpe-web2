@@ -25,7 +25,6 @@ services:
       # mapping the folder where the code php will be accessed by the php interpreter
       - ./app:/var/www/app
       - ~/.bashrc:/root/.bashrc
-      - ./xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
   mysql-db:
     image: mysql:8.0.26
