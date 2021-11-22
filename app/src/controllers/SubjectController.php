@@ -30,7 +30,7 @@ class SubjectController
 
     public function search($params = null)
     {
-        if(!AuthHelper::checkLoggedIn())
+        if (!AuthHelper::checkLoggedIn())
             return $this->view->showNotFoundPage();
 
         $criteria = $_POST;
@@ -49,9 +49,14 @@ class SubjectController
 
         $maxPageNumber = ceil($this->model->getSubjectsCount() / $limit);
 
+        if (isset($params['pathParams'][':PAGE_NUMBER'])){
+            // check if it is a number and an integer 
+            if (!is_numeric($params['pathParams'][':PAGE_NUMBER']) || !is_int((int)$params['pathParams'][':PAGE_NUMBER']))
+                return $this->view->showNotFoundPage();
+        }
         $pageNumber = isset($params['pathParams'][':PAGE_NUMBER']) ? $params['pathParams'][':PAGE_NUMBER'] : 1;
 
-        
+
         if ($pageNumber > $maxPageNumber || $pageNumber < 1)
             return $this->view->showNotFoundPage();
 
@@ -87,13 +92,13 @@ class SubjectController
 
             $this->view->showEdit($subject, $subjects, $careers, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
-            $this->index(null,"You are not an administrator.");
+            $this->index(null, "You are not an administrator.");
     }
 
     public function add($params = null)
     {
         if (!AuthHelper::checkAdmin())
-            return $this->index(null,"You are not an administrator.");
+            return $this->index(null, "You are not an administrator.");
 
         // is an admin so we check if there are all required data
 
@@ -124,14 +129,14 @@ class SubjectController
             $subjectData = $this->model->get($subjectId);
 
             if (empty($subjectData))
-                return $this->index(null,"The subject does not exist.");
+                return $this->index(null, "The subject does not exist.");
 
-            if (!empty($subjectData->image_path)){                    
+            if (!empty($subjectData->image_path)) {
                 if (!$this->model->deleteImage($subjectData->image_path))
-                    return $this->index(null,"The image of the subject could not be deleted.");
+                    return $this->index(null, "The image of the subject could not be deleted.");
             }
             if ($this->model->delete($subjectId))
-                $this->index(null,"The subject has been deleted.");
+                $this->index(null, "The subject has been deleted.");
             else
                 $this->index(null, "This subjects could not be deleted.");
         } else
@@ -144,7 +149,7 @@ class SubjectController
             $subjectId = $params['pathParams'][':ID'];
             $subjectData = $_POST;
             $this->validateSubjectData($subjectData);
-            
+
             if (!empty($_FILES['input_image']['name'])) {
                 if (!$this->isImageTypeValid($_FILES['input_image']['type']))
                     return $this->index(null, "The image type is not valid.");
@@ -152,7 +157,7 @@ class SubjectController
                 $tempImageFile = $_FILES['input_image']['tmp_name'];
                 $tempImageName = $_FILES['input_image']['name'];
                 $oldImagePath = $this->model->get($subjectId)->image_path;
-                if(!empty($oldImagePath))
+                if (!empty($oldImagePath))
                     $this->model->deleteImage($oldImagePath);
                 $this->model->update($subjectId, $subjectData, $tempImageFile, $this->getNewUniqueImagePath($tempImageName));
             } else
@@ -160,7 +165,7 @@ class SubjectController
 
             $this->index(null, "Subject updated");
         } else
-            $this->index(null,"You are not an administrator.");
+            $this->index(null, "You are not an administrator.");
     }
 
     private function getNewUniqueImagePath($imageName)
@@ -193,7 +198,7 @@ class SubjectController
             $errorsStrings = '';
             foreach ($errors as $error)
                 $errorsStrings .= $error . '<br>';
-            return $this->index(null,$errorsStrings);
+            return $this->index(null, $errorsStrings);
         }
     }
 }
