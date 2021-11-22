@@ -17,6 +17,15 @@ class UserView
         $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->display('templates/signUpPage.tpl');
     }
+
+    function showSignIn($loggedIn, $admin, $errorMessage = '')
+    {
+        $this->smarty->assign('loggedIn', $loggedIn);
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('errorMessage', $errorMessage);
+        $this->smarty->display('templates/signInPage.tpl');
+    }
+
     function showUsers($users, $loggedIn, $admin)
     {
         $this->smarty->assign('admin', $admin);

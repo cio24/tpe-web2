@@ -9,7 +9,8 @@
 ### Docker
     1. run `docker-compose build` to build the customPhp.Dockerfile
     2. run `docker-compose up -d` to run all containers associated to the services defined in the docker-compose.yml file
-    3. in order to access to the site though the domain name tpeweb2careerspath.loc, the folliwing line should be added to the file /etc/hosts: `127.0.0.1 tpeweb2careerspath.loc`
+    3. run `docker-compose up -d --build` to do the first two steps together
+    4. in order to access to the site though the domain name tpeweb2careerspath.loc, the folliwing line should be added to the file /etc/hosts: `127.0.0.1 tpeweb2careerspath.loc`
 
 ## Access to the sites
     1. to access the site go to http://tpeweb2careerspath.loc or localhost

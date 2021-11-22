@@ -1,7 +1,6 @@
 <?php
 
 require_once './controllers/HomeController.php';
-require_once './controllers/SessionController.php';
 require_once './controllers/CareerController.php';
 require_once './controllers/SubjectController.php';
 require_once './controllers/UserController.php';
@@ -21,9 +20,7 @@ $router->addRoute('404', 'GET', 'HomeController', 'showNotFoundPage');
 
 
 //SESSION ROUTES
-$router->addRoute('signin', 'GET', 'SessionController', 'index');
-$router->addRoute('signout', 'GET', 'SessionController', 'logout');
-$router->addRoute('verifyUser', 'POST', 'SessionController', 'verifyUser');
+
 
 //CAREERS ROUTES
 
@@ -69,6 +66,8 @@ $router->addRoute('subjects/search', 'POST', 'SubjectController', 'search');
 //USERS ROUTES
 //view: form to create a new user
 $router->addRoute('signup', 'GET', 'UserController', 'index');
+//view: form to sign in
+$router->addRoute('signin', 'GET', 'UserController', 'showSignIn');
 //view: all users
 $router->addRoute('users', 'GET', 'UserController', 'show');
 //view: edit form for a user
@@ -79,7 +78,13 @@ $router->addRoute('users/add', 'POST', 'UserController', 'add');
 $router->addRoute('users/:ID/update', 'POST', 'UserController', 'update');
 //action: delete a user
 $router->addRoute('users/:ID/delete', 'GET', 'UserController', 'delete');
+//action: sign out
+$router->addRoute('signout', 'GET', 'UserController', 'signOut');
+//action: verify user
+$router->addRoute('verifyUser', 'POST', 'UserController', 'verifyUser');
+
 
 $router->setDefaultRoute("HomeController", "showNotFoundPage");
 
 $router->route($_GET['action'], $_SERVER['REQUEST_METHOD']);
+

@@ -17,9 +17,15 @@ class UserController
         $this->view = new UserView();
         $this->homeView = new HomeView();
     }
+
     function index()
     {
         $this->view->showSignUp(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
+    }
+
+    function showSignIn()
+    {
+        $this->view->showSignIn(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
     function show()
@@ -30,6 +36,26 @@ class UserController
             $this->view->showUsers($users, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
             $this->homeView->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "You are not an administrator.");
+    }
+
+    function signOut()
+    {
+        session_start();
+        session_destroy();
+        header("Location:" . BASE_URL . "");
+    }
+
+    function verifyUser()
+    {
+        //getting (if exists) the user data associated with the given  id 
+        $userData = $this->model->getByEmail($_POST['email']);
+
+        //save the session if the password is correct
+        if (!empty($userData) && password_verify($_POST['password'], $userData->password)) {
+            AuthHelper::saveSession($userData);
+            header("Location: " . BASE_URL . "");
+        } else
+            $this->loginView->showLogin(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "This user is not registered or the information is wrong");
     }
 
     function add()
