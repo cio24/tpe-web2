@@ -1,18 +1,17 @@
 <?php
 
 require_once './../vendor/autoload.php';
+require_once './views/View.php';
 
-class SubjectView
+class SubjectView extends View
 {
-    private $smarty;
-
-
-    function __construct()
+    
+    public function __construct()
     {
-        $this->smarty = new Smarty();
+        parent::__construct();
     }
 
-    function showSearchResult($subjectData, $careerData, $loggedIn, $admin, $errorMessage = '')
+    function showSearchResult($subjectData, $careerData, $loggedIn, $admin, $haveResults, $errorMessage = '')
     {
         $this->smarty->assign('loggedIn', $loggedIn);
         $this->smarty->assign('admin', $admin);
@@ -20,6 +19,7 @@ class SubjectView
         $this->smarty->assign('careerData', $careerData);
         $this->smarty->assign('subjectsData', $subjectData);
         $this->smarty->assign('errorMessage', $errorMessage);
+        $this->smarty->assign('haveResults', $haveResults);
         $this->smarty->display('templates/subjectsSearchResultPage.tpl');
     }
 

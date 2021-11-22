@@ -25,7 +25,7 @@ class SessionController
     {
         session_start();
         session_destroy();
-        header("Location:" . BASE_URL . "home");
+        header("Location:" . BASE_URL . "");
     }
 
     function verifyUser()
@@ -36,7 +36,7 @@ class SessionController
         //save the session if the password is correct
         if (!empty($userData) && password_verify($_POST['password'], $userData->password)) {
             AuthHelper::saveSession($userData);
-            header("Location: " . BASE_URL . "home");
+            header("Location: " . BASE_URL . "");
         } else
             $this->loginView->showLogin(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "This user is not registered or the information is wrong");
     }

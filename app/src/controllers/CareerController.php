@@ -16,16 +16,18 @@ class CareerController
         $this->subjectModel = new SubjectModel();
     }
 
-    function index($params)
+    function index($params = null, $errorMessage = '')
     {
         $careersData = $this->model->getAll();
-        $this->view->showAll($careersData, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
+        $this->view->showAll($careersData, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), $errorMessage);
     }
 
     function show($params)
     {
-        $careerId = $params[':ID'];
+        $careerId = $params['pathParams'][':ID'];
         $careerData = $this->model->get($careerId);
+        if (!$careerData)
+            return $this->view->showNotFoundPage();
         $subjectsDataOfCareer = $this->subjectModel->getFilteredByCareer($careerId);
         $this->view->showOne($careerData, $subjectsDataOfCareer, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
@@ -40,7 +42,7 @@ class CareerController
     }
     function delete($params)
     {
-        $careerId = $params[':ID'];
+        $careerId = $params['pathParams'][':ID'];
         if (AuthHelper::checkAdmin()) {
             if ($this->model->delete($careerId))
                 header("Location:" . BASE_URL . "careers");
@@ -52,7 +54,7 @@ class CareerController
     function edit($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $careerId = $params[':ID'];
+            $careerId = $params['pathParams'][':ID'];
             $career = $this->model->get($careerId);
             $this->view->showEdit($career, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
@@ -61,7 +63,7 @@ class CareerController
     function update($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $careerId = $params[':ID'];
+            $careerId = $params['pathParams'][':ID'];
             $career = $_POST;
             header("Location:" . BASE_URL . "careers");
             $this->model->update($careerId, $career);

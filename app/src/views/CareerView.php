@@ -2,15 +2,16 @@
 
 require_once './../vendor/autoload.php';
 include_once './helpers/AuthHelper.php';
+require_once './views/View.php';
 
-class CareerView
+
+class CareerView extends View
 {
-        private $smarty;
-
-        function __construct()
+        public function __construct()
         {
-                $this->smarty = new Smarty();
+                parent::__construct();
         }
+        
         function showAll($careers, $loggedIn, $admin, $errorMessage = "")
         {
                 $this->smarty->assign('loggedIn', $loggedIn);

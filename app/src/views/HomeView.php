@@ -1,17 +1,16 @@
 <?php
 
 require_once './../vendor/autoload.php';
+require_once './views/View.php';
 
-class HomeView
+class HomeView extends View
 {
-    private $smarty;
-
-    function __construct()
+    public function __construct()
     {
-        $this->smarty = new Smarty();
+        parent::__construct();
     }
 
-    function showHome($loggedIn, $admin, $errorMessage = '')
+    public function showHome($loggedIn, $admin, $errorMessage = '')
     {
         $this->smarty->assign('errorMessage', $errorMessage);
         $this->smarty->assign('loggedIn', $loggedIn);

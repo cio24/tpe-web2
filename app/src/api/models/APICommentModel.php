@@ -18,6 +18,7 @@ class APICommentModel
 
     public function getFilteredAndSorted($sortBy, $orderBy, $difficulty)
     {
+
         $query = $this->db->prepare("SELECT * FROM comment WHERE difficulty = :difficulty ORDER BY $sortBy $orderBy");
         $query->bindParam(':difficulty', $difficulty);
         $query->execute();
@@ -48,6 +49,7 @@ class APICommentModel
 
     function getAll()
     {
+
         $query = $this->db->prepare('SELECT * FROM comment;');
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
@@ -60,7 +62,7 @@ class APICommentModel
         return $query->fetch(PDO::FETCH_OBJ);
     }
 
-    function getByUserAndSubject($userId, $subjectId)
+    function getByUserAndSubject($subjectId,$userId)
     {
         $query = $this->db->prepare('SELECT * FROM comment where user_id = ? and subject_id = ?;');
         $query->execute([$userId, $subjectId]);

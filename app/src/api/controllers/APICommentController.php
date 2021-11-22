@@ -26,20 +26,21 @@ class APICommentController extends APIController
 
     public function get($params = null)
     {
+        
         $queryParams = $params['queryParams'];
 
-        if(!$this->areParamsValid($queryParams))
+        if (!$this->areParamsValid($queryParams))
             return $this->view->response("Invalid parameters.", 400);
 
-        if(isset($queryParams['sortBy']) && isset($queryParams['orderBy']) && isset($queryParams['filterByDifficulty']))
-            $comments = $this->model->getFilteredAndSorted($queryParams['sortBy'], $queryParams['orderBy'],$queryParams['filterByDifficulty']);
+        if (isset($queryParams['sortBy']) && isset($queryParams['orderBy']) && isset($queryParams['filterByDifficulty']))
+            $comments = $this->model->getFilteredAndSorted($queryParams['sortBy'], $queryParams['orderBy'], $queryParams['filterByDifficulty']);
         elseif (isset($queryParams['sortBy']) && isset($queryParams['orderBy']))
             $comments = $this->model->getSorted($queryParams['sortBy'], $queryParams['orderBy']);
         elseif (isset($queryParams['filterByDifficulty']))
             $comments = $this->model->getFiltered($queryParams['filterByDifficulty']);
         else
             $comments = $this->model->getAll();
-        
+
         if (!empty($comments))
             $this->view->response($comments, 200);
         else {
@@ -47,12 +48,13 @@ class APICommentController extends APIController
         }
     }
 
-    private function areParamsValid($queryParams){
+    private function areParamsValid($queryParams)
+    {
         if (isset($queryParams['sortBy']) && !in_array($queryParams['sortBy'], ['difficulty', 'id']))
             return false;
         if (isset($queryParams['orderBy']) && !in_array($queryParams['orderBy'], ['asc', 'desc']))
             return false;
-        if (isset($queryParams['filterByDifficulty']) && !in_array($queryParams['filterByDifficulty'], [1,2,3,4,5]))
+        if (isset($queryParams['filterByDifficulty']) && !in_array($queryParams['filterByDifficulty'], [1, 2, 3, 4, 5]))
             return false;
         return true;
     }

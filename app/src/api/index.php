@@ -9,6 +9,7 @@ $apiRouter->addRoute("comments", "GET", "APICommentController", "get");
 $apiRouter->addRoute("comments", "POST", "APICommentController", "post");
 $apiRouter->addRoute("comments/:ID", "DELETE", "APICommentController", "delete");
 
+
 function removeSuffix($path) {
     $path = explode("/", $path);
     array_shift($path);

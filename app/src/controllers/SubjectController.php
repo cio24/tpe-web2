@@ -9,6 +9,7 @@ class SubjectController
     private $model;
     private $modelCareer;
     private $view;
+    private $homeView;
     private const MAX_SUBJECTS_PER_PAGE = 10;
 
     public function __construct()
@@ -16,6 +17,7 @@ class SubjectController
 
         $this->model = new SubjectModel();
         $this->view = new SubjectView();
+        $this->homeView = new HomeView();
         $this->modelCareer = new CareerModel();
     }
 
@@ -33,7 +35,7 @@ class SubjectController
         $action = AuthHelper::checkLoggedIn() ? 'out' : 'in';
         $subjects = $this->model->search($criteria);
         $careersData = $this->modelCareer->getAll();
-        $this->view->showSearchResult($subjects, $careersData, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
+        $this->view->showSearchResult($subjects, $careersData, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), !empty($subjects));
     }
 
     public function index($params = null, $mesagge = '')
@@ -42,11 +44,11 @@ class SubjectController
 
         $maxPageNumber = ceil($this->model->getSubjectsCount() / $limit);
 
-        $pageNumber = $params[':PAGE_NUMBER'];
-        if (empty($pageNumber))
-            $pageNumber = 1;
-        elseif ($pageNumber > $maxPageNumber)
-            $pageNumber = $maxPageNumber;
+        $pageNumber = $params['pathParams'][':PAGE_NUMBER'];
+        
+        if ($pageNumber > $maxPageNumber || $pageNumber < 1)
+            return $this->view->showNotFoundPage();
+
         $offset = ($pageNumber - 1) * $limit;
 
         $subjectsData = $this->model->getAll($offset, $limit);
@@ -59,7 +61,9 @@ class SubjectController
     {
         session_start();
         $userId = $_SESSION["USER_ID"];
-        $subjectData = $this->model->get($params[':ID']);
+        $subjectData = $this->model->get($params['pathParams'][':ID']);
+        if (empty($subjectData))
+            return $this->view->showNotFoundPage();
         $this->view->showSubject($subjectData, $userId, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
 
@@ -67,7 +71,7 @@ class SubjectController
     {
 
         if (AuthHelper::checkAdmin()) {
-            $subjectId = $params[':ID'];
+            $subjectId = $params['pathParams'][':ID'];
             $subject = $this->model->get($subjectId);
             if (empty($subject))
                 return $this->index(null, "The subject does not exist.");
@@ -113,7 +117,7 @@ class SubjectController
     public function delete($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $subjectId = $params[':ID'];
+            $subjectId = $params['pathParams'][':ID'];
 
             $subjectData = $this->model->get($subjectId);
 
@@ -134,7 +138,7 @@ class SubjectController
     public function update($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $subjectId = $params[':ID'];
+            $subjectId = $params['pathParams'][':ID'];
             $subjectData = $_POST;
             $this->validateSubjectData($subjectData);
 

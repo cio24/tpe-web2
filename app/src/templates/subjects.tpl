@@ -1,4 +1,3 @@
-<h1 class="text-center">All Subjects</h1>
 {if $errorMessage neq ""} 
 <p class="alert alert-danger" role="alert">{$errorMessage}</p>
 {/if}

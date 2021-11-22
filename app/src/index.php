@@ -15,7 +15,10 @@ define("LOGIN", BASE_URL . "login");
 $router = new Router();
 
 //HOME ROUTE
-$router->addRoute('home', 'GET', 'HomeController', 'index');
+$router->addRoute('', 'GET', 'HomeController', 'index');
+
+$router->addRoute('404', 'GET', 'HomeController', 'showNotFoundPage');
+
 
 //SESSION ROUTES
 $router->addRoute('signin', 'GET', 'SessionController', 'index');
@@ -77,6 +80,6 @@ $router->addRoute('users/:ID/update', 'POST', 'UserController', 'update');
 //action: delete a user
 $router->addRoute('users/:ID/delete', 'GET', 'UserController', 'delete');
 
-$router->setDefaultRoute("HomeController", "index");
+$router->setDefaultRoute("HomeController", "showNotFoundPage");
 
 $router->route($_GET['action'], $_SERVER['REQUEST_METHOD']);

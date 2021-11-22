@@ -14,4 +14,8 @@ class HomeController
     {
         $this->view->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
+
+    function showNotFoundPage(){
+        $this->view->showNotFoundPage();
+    }
 }

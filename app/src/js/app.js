@@ -4,12 +4,12 @@ const app = Vue.createApp({
         return {
             comments: [],
             comment: "",
-            difficulty: 0
+            difficulty: 1
         }
     },
     computed: {
-        userId: () => document.querySelector('#app').dataset.user_id,
-        subjectId: () => document.querySelector('#app').dataset.id
+        userId: () => Number(document.querySelector('#app').dataset.user_id),
+        subjectId: () => Number(document.querySelector('#app').dataset.id)
     },
     async created() {
         try {

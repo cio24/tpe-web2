@@ -1,37 +1,24 @@
-<section id="app" class="container" data-id="{$subjectData->id}" data-user_id="{$userId}">
-  <h2>Comments</h2>
+<section id="app" class="container" data-id={$subjectData->id} data-user_id={$userId}>
+  <br>
   {if $loggedIn}
-    <form @submit.prevent="createComment">
-      <div class="row">
-        <div class="col">
-          <h3>Add comment</h3>
-        </div>
-        <div class="col">
-          <label for="comment">Comment</label>
-          <textarea name="comment" id="comment" v-model="comment" cols="30" rows="2"></textarea>
-        </div>
-        <div class="col">
-          <label for="rating">Rating</label>
-          <select name="rating" id="rating" v-model="difficulty">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-        <div class="col">
-          <button type="submit">Send</button>
-        </div>
-      </div>
-    </form>
+    <h3>Add comment</h3>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Comment</span>
+        <input v-model="comment" type="text" class="form-control" placeholder="Hard" aria-label="Hard" aria-describedby="basic-addon1">
+        <span class="input-group-text" id="basic-addon1">Difficulty</span>
+        <select v-model="difficulty" class="form-select" aria-label="Default select example">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <form @submit.prevent="createComment">
+          <button class="btn btn-success">Send</button>
+        </form>   
+    </div>
   {/if}
-  <div v-for="comment in comments" class="row">
-    <h3 class="col">{{ comment.user_id }}</h3>
-    <p class="col">{{ comment.comment }} {{ comment.difficulty }}</p>
-    {if $admin}
-      <a class="col btn bi bi-trash" id="btn-delete" @click="deleteComment(comment.id)" :data-id="comment.id"></a>
-    {/if}
-  </div>
+  <h2 class="text-center">Comments</h2>
+  {include file="comments.tpl"}
 </section>
 <script src="../js/app.js"></script>

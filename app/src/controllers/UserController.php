@@ -39,14 +39,14 @@ class UserController
             $this->model->add($user);
             $userData = $this->model->getByEmail($user['email']);
             AuthHelper::saveSession($userData);
-            header("Location: " . BASE_URL . "home");
+            header("Location: " . BASE_URL . "");
         } else
             $this->view->showSignUp(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), 'User already exists');
     }
     function delete($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $this->model->delete($params[':ID']);
+            $this->model->delete($params['pathParams'][':ID']);
             header("Location: " . BASE_URL . "users");
         } else
             $this->homeView->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "You are not an administrator.");
@@ -54,7 +54,7 @@ class UserController
     function edit($params)
     {
         if (AuthHelper::checkAdmin()) {
-            $user = $this->model->get($params[':ID']);
+            $user = $this->model->get($params['pathParams'][':ID']);
             $this->view->showEdit($user, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
             $this->homeView->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "You are not an administrator.");
@@ -63,7 +63,7 @@ class UserController
     {
         $userData = $_POST;
         if (AuthHelper::checkAdmin()) {
-            $this->model->update($params[':ID'], $userData);
+            $this->model->update($params['pathParams'][':ID'], $userData);
             header("Location:" . BASE_URL . "users");
         } else
             $this->homeView->showHome(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), "You are not an administrator.");
