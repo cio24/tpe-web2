@@ -102,10 +102,6 @@ class SubjectController
 
         // no errors so we can add the subject
 
-        // if the subject has not a requirement we change the string to a null value por the database
-        if ($subjectData['direct_requirement'] == "null")
-            $subjectData['direct_requirement'] = null;
-
         // if the image is not empty
         if ((!empty($_FILES['input_image']['name']))) {
             if (!$this->isImageTypeValid($_FILES['input_image']['type']))
@@ -137,7 +133,7 @@ class SubjectController
             if ($this->model->delete($subjectId))
                 $this->index(null,"The subject has been deleted.");
             else
-                $this->index(null, "This subjects cannot be delete 'cause is a requirement of another subject.");
+                $this->index(null, "This subjects could not be deleted.");
         } else
             $this->index(null, "You are not an administrator.");
     }
@@ -148,9 +144,7 @@ class SubjectController
             $subjectId = $params['pathParams'][':ID'];
             $subjectData = $_POST;
             $this->validateSubjectData($subjectData);
-
-            if ($subjectData['direct_requirement'] == "null")
-                $subjectData['direct_requirement'] = null;
+            
             if (!empty($_FILES['input_image']['name'])) {
                 if (!$this->isImageTypeValid($_FILES['input_image']['type']))
                     return $this->index(null, "The image type is not valid.");

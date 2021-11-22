@@ -26,7 +26,6 @@
         <th>Subject</th>
         <th>Year</th>
         <th>Semester</th>
-        <th>Requirement</th>
       </tr>
     </thead>
     <tbody>
@@ -35,7 +34,6 @@
           <td><a href="/subjects/{$subjectData->id}">{$subjectData->name}</a></td>
           <td>{$subjectData->year}</td>
           <td>{$subjectData->semester}</td>
-          <td>{$subjectData->direct_requirement}</td>
         </tr>
       {/foreach}
     </tbody>

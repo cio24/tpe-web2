@@ -17,7 +17,6 @@
     <th>Subject</th>
     <th>Year</th>
     <th>Semester</th>
-    <th>Requirement</th>
     <th>Career</th>
     <th>Image</th>
     {if $admin}
@@ -33,7 +32,6 @@
         <td><a href="/subjects/{$subject->id}">{$subject->name}</a></td>
         <td>{$subject->year}</td>
         <td>{$subject->semester}</td>
-        <td>{$subject->direct_requirement}</td>
         <td>{$subject->career}</td>
         {if $subject->image_path} 
         <td><img src={$subject->image_path} /></td>

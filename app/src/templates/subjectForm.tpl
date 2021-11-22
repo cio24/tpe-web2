@@ -16,15 +16,6 @@
         <input type="number" class="form-control" name="semester" id="" value="{$subject->semester}">
     </div>
     <div class="mb-3">
-        <label for="direct_requirement">Requirement</label>
-        <select class="form-control" name="direct_requirement" id="">
-            <option selected value="null">Without requirement</option>
-            {foreach from=$subjects item=$item}
-                <option value="{$item->id}">{$item->name}</option>
-            {/foreach}}
-        </select>
-    </div>
-    <div class="mb-3">
         <label for="career">Career</label>
         <select class="form-control" name="career" id="">
             {foreach from=$careersData item=$career}

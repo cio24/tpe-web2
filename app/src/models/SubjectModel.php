@@ -69,8 +69,8 @@ class SubjectModel
         if (!empty($tempImageFile))
             $this->saveImage($tempImageFile, $imagePath);
 
-        $query = $this->db->prepare("INSERT INTO subject (semester, year, name, direct_requirement, career, image_path) VALUES (?, ?, ?, ?, ?, ?);");
-        $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $imagePath]);
+        $query = $this->db->prepare("INSERT INTO subject (semester, year, name, career, image_path) VALUES (?, ?, ?, ?, ?, ?);");
+        $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['career'], $imagePath]);
     }
 
     function saveImage($tempImageFile, $tempImagePath)
@@ -83,8 +83,8 @@ class SubjectModel
         if (!empty($tempImageFile))
             $this->saveImage($tempImageFile, $imagePath);
 
-        $query = $this->db->prepare("UPDATE subject SET semester = ?,year = ?,name = ?,direct_requirement = ?, career = ?, image_path = ? WHERE subject.id = ?;");
-        $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['direct_requirement'], $subject['career'], $imagePath, $subjectId ]);
+        $query = $this->db->prepare("UPDATE subject SET semester = ?,year = ?,name = ?, career = ?, image_path = ? WHERE subject.id = ?;");
+        $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['career'], $imagePath, $subjectId ]);
     }
 
     function delete($subjectId)
