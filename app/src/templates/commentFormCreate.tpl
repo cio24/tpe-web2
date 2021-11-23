@@ -12,5 +12,6 @@
         </select>
         <form @submit.prevent="createComment">
           <button class="btn btn-success">Send</button>
-        </form>   
-    </div>
+        </form>
+      </div>
+        <p v-if="error" class="alert alert-danger" role="alert">{{ message }}</p>

@@ -7,6 +7,8 @@ const app = Vue.createApp({
       sortBy: "date",
       order: "asc",
       difficultyFilterValue: null,
+      error: false,
+      message: ""
     };
   },
   computed: {
@@ -51,7 +53,8 @@ const app = Vue.createApp({
 
         this.comments = await response.json();
       } catch (error) {
-        alert(error);
+        this.error = true
+        this.message = error
       }
     },
 
@@ -80,7 +83,8 @@ const app = Vue.createApp({
         if (!response.ok) throw new Error(await response.text());
         else this.getComments();
       } catch (error) {
-        alert(error);
+        this.error = true
+        this.message = error
       }
     },
 
@@ -95,7 +99,8 @@ const app = Vue.createApp({
         if (!response.ok) throw new Error(await response.text());
         this.comments = await response.json();
       } catch (error) {
-        alert(error);
+        this.error = true
+        this.message = error
       }
     },
   },
