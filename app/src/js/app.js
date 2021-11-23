@@ -73,13 +73,14 @@ const app = Vue.createApp({
       };
 
       try {
-        await fetch(
+        const response = await fetch(
           "http://tpeweb2careerspath.loc/api/comments",
           requestOptions
         );
-        this.getComments();
+        if (!response.ok) throw new Error(await response.text());
+        else this.getComments();
       } catch (error) {
-        alert("There was an error.");
+        alert(error);
       }
     },
 
