@@ -50,6 +50,13 @@ class APICommentModel
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
+    function get($id)
+    {
+        $query = $this->db->prepare('SELECT * FROM comment where id = ?;');
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+
 
     function create($data)
     {
