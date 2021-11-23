@@ -74,7 +74,7 @@ class UserController
     }
 
     function delete($params)
-    { 
+    {
         if (!AuthHelper::checkAdmin())
             return $this->homeView->showNotFoundPage();
 
@@ -83,20 +83,18 @@ class UserController
             return $this->homeView->showNotFoundPage();
         $this->model->delete($params['pathParams'][':ID']);
         header("Location: " . BASE_URL . "users");
-
     }
 
     function edit($params)
     {
-        if(!AuthHelper::checkAdmin())
+        if (!AuthHelper::checkAdmin())
             return $this->homeView->showNotFoundPage();
 
         $user = $this->model->get($params['pathParams'][':ID']);
-        if(empty($user) || $user->id == $_SESSION['USER_ID'])
+        if (empty($user) || $user->id == $_SESSION['USER_ID'])
             return $this->homeView->showNotFoundPage();
-        
-        $this->view->showEdit($user, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
 
+        $this->view->showEdit($user, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
     }
     function update($params)
     {
