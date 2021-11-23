@@ -92,8 +92,8 @@ const app = Vue.createApp({
 
       try {
         let response = await fetch(url);
-        this.comments = await response.json();
         if (!response.ok) throw new Error(await response.text());
+        this.comments = await response.json();
       } catch (error) {
         alert(error);
       }
