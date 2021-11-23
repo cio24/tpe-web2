@@ -69,7 +69,7 @@ class SubjectModel
         if (!empty($tempImageFile))
             $this->saveImage($tempImageFile, $imagePath);
 
-        $query = $this->db->prepare("INSERT INTO subject (semester, year, name, career, image_path) VALUES (?, ?, ?, ?, ?, ?);");
+        $query = $this->db->prepare("INSERT INTO subject (semester, year, name, career, image_path) VALUES (?, ?, ?, ?, ?);");
         $query->execute([$subject['semester'], $subject['year'], $subject['name'], $subject['career'], $imagePath]);
     }
 
