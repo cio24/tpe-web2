@@ -65,7 +65,7 @@ class APICommentController extends APIController
     public function post($params = null)
     {
         $data = $this->getData();
-        $comment = $this->model->getByUserAndSubject($data['subject_id'], $data['user_id']);
+        $comment = $this->model->getByUserAndSubject($data['user_id'], $data['subject_id']);
         if (!empty($comment)) {
             $this->view->response("The user has already commented this subject.", 409);
         } else {
