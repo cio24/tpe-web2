@@ -14,4 +14,3 @@
           <button class="btn btn-success">Send</button>
         </form>
       </div>
-        <p v-if="error" class="alert alert-danger" role="alert">{{ message }}</p>

@@ -8,7 +8,7 @@ const app = Vue.createApp({
       order: "asc",
       difficultyFilterValue: null,
       error: false,
-      message: ""
+      message: "",
     };
   },
   computed: {
@@ -21,9 +21,12 @@ const app = Vue.createApp({
         `http://tpeweb2careerspath.loc/api/comments?subject_id=${this.subjectId}`
       );
       if (!response.ok) throw new Error(await response.text());
-      this.comments = await response.json();
+      else {
+        this.comments = await response.json();
+        this.message = "";
+      }
     } catch (error) {
-      alert(error);
+      this.message = error;
     }
   },
 
@@ -39,8 +42,9 @@ const app = Vue.createApp({
           requestOptions
         );
         this.getComments();
+        this.message = "";
       } catch (error) {
-        alert("There was an error.");
+        this.message = "There was an error.";
       }
     },
 
@@ -50,11 +54,12 @@ const app = Vue.createApp({
           `http://tpeweb2careerspath.loc/api/comments?subject_id=${this.subjectId}`
         );
         if (!response.ok) throw new Error(await response.text());
+        else this.message = "";
 
         this.comments = await response.json();
       } catch (error) {
-        this.error = true
-        this.message = error
+        this.error = true;
+        this.message = error;
       }
     },
 
@@ -81,10 +86,13 @@ const app = Vue.createApp({
           requestOptions
         );
         if (!response.ok) throw new Error(await response.text());
-        else this.getComments();
+        else {
+          this.getComments();
+          this.message = "";
+        }
       } catch (error) {
-        this.error = true
-        this.message = error
+        this.error = true;
+        this.message = error;
       }
     },
 
@@ -97,10 +105,15 @@ const app = Vue.createApp({
       try {
         let response = await fetch(url);
         if (!response.ok) throw new Error(await response.text());
-        this.comments = await response.json();
+        else {
+          this.comments = await response.json();
+          this.message = "";
+        }
       } catch (error) {
-        this.error = true
-        this.message = error
+        this.error = true;
+        console.log("holanduski");
+        console.log(error);
+        this.message = error;
       }
     },
   },
