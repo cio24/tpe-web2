@@ -41,7 +41,9 @@ CREATE TABLE comment (
   subject_id int NOT NULL,
   comment varchar(250) NOT NULL,  
   difficulty int NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (subject_id) REFERENCES subject(id),
+  FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 

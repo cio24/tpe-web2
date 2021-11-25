@@ -26,7 +26,7 @@ class CareerController
     {
         $careerId = $params['pathParams'][':ID'];
         $careerData = $this->model->get($careerId);
-        if (!$careerData)
+        if (empty($careerData))
             return $this->view->showNotFoundPage();
         $subjectsDataOfCareer = $this->subjectModel->getFilteredByCareer($careerId);
         $this->view->showOne($careerData, $subjectsDataOfCareer, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
@@ -34,35 +34,44 @@ class CareerController
     function add()
     {
         if (AuthHelper::checkAdmin()) {
+            if (empty($_POST['name']) || empty($_POST['years']) || empty($_POST['faculty']))
+                return $this->index(null, 'Fill in all fields');
             $career = $_POST;
             $this->model->add($career);
-            $this->index(null,'');
+            $this->index(null, '');
         } else
-            $this->index(null,"You are not an administrator.");
+            $this->index(null, "You are not an administrator.");
     }
     function delete($params)
     {
         $careerId = $params['pathParams'][':ID'];
         if (AuthHelper::checkAdmin()) {
+            $career = $this->model->get($careerId);
+            if (empty($career))
+                return $this->index(null, "The career does not exist.");
             if ($this->model->delete($careerId))
                 header("Location:" . BASE_URL . "careers");
             else
-                $this->index(null,"This career cannot be delete 'cause it has subjects loaded");
+                $this->index(null, "This career cannot be delete 'cause it has subjects loaded");
         } else
-            $this->index(null,"You are not an administrator.");
+            $this->index(null, "You are not an administrator.");
     }
     function edit($params)
     {
         if (AuthHelper::checkAdmin()) {
             $careerId = $params['pathParams'][':ID'];
             $career = $this->model->get($careerId);
+            if (empty($career))
+                return $this->index(null, "The career does not exist.");
             $this->view->showEdit($career, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
-            $this->index(null,"You are not an administrator.");
+            $this->index(null, "You are not an administrator.");
     }
     function update($params)
     {
         if (AuthHelper::checkAdmin()) {
+            if (empty($_POST['name']) || empty($_POST['years']) || empty($_POST['faculty']))
+                return $this->index(null, 'Fill in all fields');
             $careerId = $params['pathParams'][':ID'];
             $career = $_POST;
             header("Location:" . BASE_URL . "careers");
@@ -70,6 +79,6 @@ class CareerController
             $careers = $this->model->getAll();
             $this->view->showAll($careers, AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
         } else
-            $this->index(null,"You are not an administrator.");
+            $this->index(null, "You are not an administrator.");
     }
 }

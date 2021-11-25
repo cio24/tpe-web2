@@ -40,7 +40,7 @@ class UserModel
     }
     function delete($userId)
     {
-        $query = $this->db->prepare("DELETE FROM user WHERE id = ?");
+        $query = $this->db->prepare("DELETE FROM user WHERE id = ?;");
         $query->execute(array($userId));
     }
     function update($userId, $userData)

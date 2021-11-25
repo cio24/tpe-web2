@@ -18,14 +18,14 @@ class UserController
         $this->homeView = new HomeView();
     }
 
-    function index()
+    function index($params = null, $errorMessage = '')
     {
-        $this->view->showSignUp(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
+        $this->view->showSignUp(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), $errorMessage);
     }
 
-    function showSignIn()
+    function showSignIn($params = null, $errorMessage = '')
     {
-        $this->view->showSignIn(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin());
+        $this->view->showSignIn(AuthHelper::checkLoggedIn(), AuthHelper::checkAdmin(), $errorMessage);
     }
 
     function show()
@@ -47,6 +47,9 @@ class UserController
 
     function verifyUser()
     {
+        if (empty($_POST['email']) || empty($_POST['password'])) {
+            return $this->showSignIn(null, 'Fill in all fields');
+        }
         //getting (if exists) the user data associated with the given  id 
         $userData = $this->model->getByEmail($_POST['email']);
 
@@ -60,6 +63,8 @@ class UserController
 
     function add()
     {
+        if (empty($_POST['email']) || empty($_POST['password']))
+            return $this->index(null, 'Fill in all fields');
         $user = $_POST;
         $userData = $this->model->getByEmail($user['email']);
         if (!$userData) {
